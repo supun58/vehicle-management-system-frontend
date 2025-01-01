@@ -4,6 +4,7 @@ import Login from "./pages/login";
 import "./App.css";
 import UserDashboard from "./pages/UserDashboard";
 import VehicleRequestForm from "./pages/VehicleRequestForm";
+import DriverDashboard from "./pages/DriverDashboard";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -16,10 +17,13 @@ function App() {
           <Route path="/" element={<Login />} />
 
           {/* User Dashboard */}
-          <Route path="/dashboard" element={<UserDashboard />} />
+          <Route path="/user-dashboard" element={<UserDashboard />} />
 
           {/* Vehicle Request Form */}
           <Route path="/request-vehicle" element={<VehicleRequestForm />} />
+
+          {/* Driver dashboard*/}
+          <Route path="/driver-dashboard" element={<DriverDashboard />} />
         </Routes>
       </div>
     </Router>

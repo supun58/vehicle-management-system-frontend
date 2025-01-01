@@ -1,6 +1,20 @@
 import React, { useState } from "react";
+import Navbar from "../components/NavBar";
 
 export default function VehicleRequestForm() {
+  const [from, setFrom] = useState("");
+  const [to, setTo] = useState("");
+  const [distance, setDistance] = useState("");
+
+  const places = [
+    "Faculty of Science",
+    "Main Library",
+    "Auditorium",
+    "Cafeteria",
+    "Engineering Faculty",
+    "Administration Building",
+    "Hostels",
+  ];
   const [formData, setFormData] = useState({
     name: "",
     contact: "",
@@ -24,6 +38,7 @@ export default function VehicleRequestForm() {
 
   return (
     <div className="min-h-screen bg-gray-100 flex items-center justify-center">
+      <Navbar />
       <div className="bg-white shadow-lg rounded-lg p-8 w-96">
         <h2 className="text-2xl font-bold text-gray-800 mb-6">
           Request a Vehicle
@@ -131,11 +146,72 @@ export default function VehicleRequestForm() {
               required
             />
           </div>
+          {/* Select places */}
+          <div>
+            <h2 className="block text-sm font-medium text-gray-700">
+              Select Places
+            </h2>
+
+            {/* From Dropdown */}
+            <div className="mb-4">
+              <select
+                id="from"
+                value={from}
+                onChange={(e) => setFrom(e.target.value)}
+                className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring focus:ring-blue-500"
+              >
+                <option value="" disabled>
+                  Select starting point
+                </option>
+                {places.map((place, index) => (
+                  <option key={index} value={place}>
+                    {place}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            {/* To Dropdown */}
+            <div className="mb-4">
+              <select
+                id="to"
+                value={to}
+                onChange={(e) => setTo(e.target.value)}
+                className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring focus:ring-blue-500"
+              >
+                <option value="" disabled>
+                  Select destination
+                </option>
+                {places.map((place, index) => (
+                  <option key={index} value={place}>
+                    {place}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
+          {/* Distance Field */}
+          <div className="mb-4">
+            <label
+              htmlFor="distance"
+              className="block text-gray-700 font-medium mb-2"
+            >
+              Distance (in kms)
+            </label>
+            <input
+              type="number"
+              id="distance"
+              value={distance}
+              onChange={(e) => setDistance(e.target.value)}
+              className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring focus:ring-blue-500"
+              placeholder="Enter distance"
+            />
+          </div>
 
           {/* Submit Button */}
           <button
             type="submit"
-            className="w-full bg-blue-600 text-white p-2 rounded-lg hover:bg-blue-500 transition duration-300"
+            className="w-full bg-maroon-700 text-white p-2 rounded-lg hover:bg-blue-500 transition duration-300"
           >
             Submit Request
           </button>
