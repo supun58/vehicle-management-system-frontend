@@ -11,7 +11,7 @@ function Navbar() {
           <div className="flex items-center">
             <Car className="h-8 w-8 text-ash-200" />
             <span className="ml-2 text-xl font-bold text-ash-100">
-              UnitTransit
+              UniTransit
             </span>
           </div>
           <div className="flex items-center space-x-4">

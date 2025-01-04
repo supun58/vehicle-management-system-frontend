@@ -7,7 +7,6 @@ import {
   MessageSquare,
   Navigation,
 } from "lucide-react";
-import Navbar from "../components/NavBar";
 
 function DriverDashboard() {
   const schedules = [
@@ -43,7 +42,6 @@ function DriverDashboard() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-maroon-700 via-ash-700 to-ash-500">
-      <Navbar />
       {/* Main Content */}
       <main className="pt-20 px-4 md:px-8">
         <div className="max-w-7xl mx-auto grid gap-6">

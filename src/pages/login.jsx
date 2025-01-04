@@ -1,11 +1,11 @@
 import React from "react";
 import { Car } from "lucide-react";
-import Navbar from "../components/NavBar";
+import App from "../App";
+
 
 export default function Login() {
   return (
-    <div className="min h-screen h-screen w-screen flex  ">
-      <Navbar />
+    <div className="min-h-screen flex flex-col lg:flex-row">
 
       {/* Logo Section */}
       <div className="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-maroon-700 via-ash-700 to-ash-500 flex-col items-center justify-center p-12">
@@ -71,7 +71,7 @@ export default function Login() {
           <div className="mt-4 text-sm text-center text-ash-600">
             <span>New user? </span>
             <a
-              href="#"
+              href="/register"
               className="text-maroon-600 hover:text-maroon-700 underline"
             >
               Register here

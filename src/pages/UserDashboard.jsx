@@ -1,11 +1,9 @@
 import React from "react";
 import { Car, Calendar } from "lucide-react";
-import Navbar from "../components/NavBar";
 
 function Dashboard() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-maroon-700 via-ash-700 to-ash-500">
-      <Navbar />
       {/* Main Content */}
       <main className="pt-16">
         <div className="container mx-auto px-4 py-8">

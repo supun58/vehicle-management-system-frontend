@@ -25,30 +25,31 @@ const Registration = () => {
     container: {
       minHeight: '100vh',
       background: 'linear-gradient(135deg, #f6f8fb 0%, #e9edf3 100%)',
-      padding: '2rem 1rem',
+      padding: '0.5rem 1rem', 
+      marginTop: '4rem',    
     },
     formCard: {
-      maxWidth: '480px',
+      maxWidth: '400px', 
       margin: '0 auto',
       background: 'white',
       borderRadius: '16px',
       boxShadow: '0 4px 20px rgba(0, 0, 0, 0.08)',
-      padding: '2rem',
+      padding: '1.3rem',
     },
     title: {
       color: '#2d3748',
-      fontSize: '1.75rem',
+      fontSize: '1.5rem', 
       fontWeight: '700',
       textAlign: 'center',
-      marginBottom: '2rem',
+      marginBottom: '1.5rem',
       position: 'relative',
       paddingBottom: '1rem',
       borderBottom: '3px solid #800000',
       width: 'fit-content',
-      margin: '0 auto 2rem',
+      margin: '0 auto 1.5rem',
     },
     formGroup: {
-      marginBottom: '1.5rem',
+      marginBottom: '0.65rem', 
     },
     label: {
       display: 'block',
@@ -59,7 +60,7 @@ const Registration = () => {
     },
     input: {
       width: '100%',
-      padding: '0.75rem 1rem',
+      padding: '0.4rem 0.65rem', 
       border: '2px solid #e2e8f0',
       borderRadius: '8px',
       fontSize: '0.875rem',
@@ -69,7 +70,7 @@ const Registration = () => {
     },
     select: {
       width: '100%',
-      padding: '0.75rem 1rem',
+      padding: '0.4rem 0.65rem', 
       border: '2px solid #e2e8f0',
       borderRadius: '8px',
       fontSize: '0.875rem',
@@ -84,11 +85,11 @@ const Registration = () => {
     buttonGroup: {
       display: 'flex',
       gap: '1rem',
-      marginTop: '2rem',
+      marginTop: '0.8rem', 
     },
     button: {
       flex: 1,
-      padding: '0.75rem 1.5rem',
+      padding: '0.4rem 1rem', 
       borderRadius: '8px',
       border: 'none',
       fontSize: '0.875rem',
@@ -109,8 +110,9 @@ const Registration = () => {
       alignItems: 'center',
       gap: '0.5rem',
       marginRight: '0.5rem',
-    }
+    },
   };
+  
 
   const validateEmail = (email) => {
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);

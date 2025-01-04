@@ -1,10 +1,16 @@
-import React, { useState } from "react";
-import Navbar from "../components/NavBar";
+import React, { useState, useEffect } from "react";
 
 export default function VehicleRequestForm() {
   const [from, setFrom] = useState("");
   const [to, setTo] = useState("");
   const [distance, setDistance] = useState("");
+  const [formData, setFormData] = useState({
+    name: "",
+    contact: "",
+    vehicleType: "",
+    purpose: "",
+    date: "",
+  });
 
   const places = [
     "Faculty of Science",
@@ -15,13 +21,13 @@ export default function VehicleRequestForm() {
     "Administration Building",
     "Hostels",
   ];
-  const [formData, setFormData] = useState({
-    name: "",
-    contact: "",
-    vehicleType: "",
-    purpose: "",
-    date: "",
-  });
+
+  useEffect(() => {
+    const tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    const minDate = tomorrow.toISOString().split("T")[0];
+    document.getElementById("date").setAttribute("min", minDate);
+  }, []);
 
   const handleChange = (e) => {
     setFormData({
@@ -37,19 +43,13 @@ export default function VehicleRequestForm() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 flex items-center justify-center">
-      <Navbar />
-      <div className="bg-white shadow-lg rounded-lg p-8 w-96">
-        <h2 className="text-2xl font-bold text-gray-800 mb-6">
-          Request a Vehicle
-        </h2>
-        <form onSubmit={handleSubmit} className="space-y-4">
+    <div className="min-h-screen bg-gray-100 flex items-center justify-center pt-20"> 
+      <div className="bg-white shadow-lg rounded-lg p-4 w-96">
+        <h2 className="text-2xl font-bold text-gray-800 mb-2 text-center">Request a Vehicle</h2> 
+        <form onSubmit={handleSubmit} className="space-y-2"> 
           {/* Name */}
           <div>
-            <label
-              htmlFor="name"
-              className="block text-sm font-medium text-gray-700"
-            >
+            <label htmlFor="name" className="block text-sm font-medium text-gray-700">
               Name
             </label>
             <input
@@ -66,10 +66,7 @@ export default function VehicleRequestForm() {
 
           {/* Contact */}
           <div>
-            <label
-              htmlFor="contact"
-              className="block text-sm font-medium text-gray-700"
-            >
+            <label htmlFor="contact" className="block text-sm font-medium text-gray-700">
               Contact Number
             </label>
             <input
@@ -86,10 +83,7 @@ export default function VehicleRequestForm() {
 
           {/* Vehicle Type */}
           <div>
-            <label
-              htmlFor="vehicleType"
-              className="block text-sm font-medium text-gray-700"
-            >
+            <label htmlFor="vehicleType" className="block text-sm font-medium text-gray-700">
               Vehicle Type
             </label>
             <select
@@ -111,10 +105,7 @@ export default function VehicleRequestForm() {
 
           {/* Purpose */}
           <div>
-            <label
-              htmlFor="purpose"
-              className="block text-sm font-medium text-gray-700"
-            >
+            <label htmlFor="purpose" className="block text-sm font-medium text-gray-700">
               Purpose
             </label>
             <textarea
@@ -130,10 +121,7 @@ export default function VehicleRequestForm() {
 
           {/* Date */}
           <div>
-            <label
-              htmlFor="date"
-              className="block text-sm font-medium text-gray-700"
-            >
+            <label htmlFor="date" className="block text-sm font-medium text-gray-700">
               Date
             </label>
             <input
@@ -146,14 +134,13 @@ export default function VehicleRequestForm() {
               required
             />
           </div>
-          {/* Select places */}
+
+          {/* Select Places */}
           <div>
-            <h2 className="block text-sm font-medium text-gray-700">
-              Select Places
-            </h2>
+            <h2 className="block text-sm font-medium text-gray-700">Select Places</h2>
 
             {/* From Dropdown */}
-            <div className="mb-4">
+            <div className="mb-2"> 
               <select
                 id="from"
                 value={from}
@@ -172,7 +159,7 @@ export default function VehicleRequestForm() {
             </div>
 
             {/* To Dropdown */}
-            <div className="mb-4">
+            <div className="mb-2"> 
               <select
                 id="to"
                 value={to}
@@ -190,12 +177,10 @@ export default function VehicleRequestForm() {
               </select>
             </div>
           </div>
+
           {/* Distance Field */}
-          <div className="mb-4">
-            <label
-              htmlFor="distance"
-              className="block text-gray-700 font-medium mb-2"
-            >
+          <div className="mb-2"> 
+            <label htmlFor="distance" className="block text-gray-700 font-medium mb-1">
               Distance (in kms)
             </label>
             <input
