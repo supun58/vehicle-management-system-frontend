@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import { FaUser, FaEnvelope, FaPhone, FaLock, FaIdCard } from 'react-icons/fa';
+import axios from 'axios';
 
 const Registration = () => {
   const [step, setStep] = useState(1);
   const [errors, setErrors] = useState({});
   const [formData, setFormData] = useState({
-    fullName: '',
+    full_name: '',
     email: '',
     phone: '',
     password: '',
@@ -20,6 +21,9 @@ const Registration = () => {
     licenseNumber: '',
     vehicleAssigned: ''
   });
+
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
 
   const styles = {
     container: {
@@ -128,7 +132,7 @@ const Registration = () => {
 
   const validateStep1 = () => {
     const newErrors = {};
-    if (!formData.fullName) newErrors.fullName = 'Full name is required';
+    if (!formData.full_name) newErrors.full_name = 'Full name is required';
     if (!formData.email) newErrors.email = 'Email is required';
     else if (!validateEmail(formData.email)) newErrors.email = 'Invalid email format';
     if (!formData.phone) newErrors.phone = 'Phone number is required';
@@ -179,7 +183,7 @@ const Registration = () => {
     if (step === 1 && validateStep1()) {
       setStep(2);
     } else if (step === 2 && validateStep2()) {
-      console.log('Form submitted:', formData);
+      handleSubmit(); 
     }
   };
 
@@ -187,6 +191,55 @@ const Registration = () => {
     setStep(1);
   };
 
+    
+  const handleSubmit = async (e) => {
+    e.preventDefault(); 
+    setIsSubmitting(true); 
+  
+    try {
+      const response = await axios.post('http://localhost:5000/api/auth/register', formData);
+  
+      alert(response.data.message);
+  
+      setFormData({
+        full_name: '',
+        email: '',
+        phone: '',
+        password: '',
+        confirmPassword: '',
+        role: '',
+        studentId: '',
+        faculty: '',
+        level: '',
+        staffId: '',
+        department: '',
+        position: '',
+        licenseNumber: '',
+        vehicleAssigned: '',
+      });
+      setStep(1); 
+     } 
+     catch (error) {
+      console.error('Error registering user:', error);
+  
+      if (error.response) {
+        // Extract error message or fallback to default
+        const errorMessage = error.response.data.message || 'Something went wrong on the server';
+        alert(`Registration failed: ${errorMessage}`);
+      } else if (error.request) {
+        // No response was received
+        alert('Registration failed: No response from the server');
+      } else {
+        // Other errors (e.g., network issues)
+        alert(`Registration failed: ${error.message}`);
+      }
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+  
+  
+  
   const renderInput = (name, label, type = 'text', icon = null) => (
     <div style={styles.formGroup}>
       <label style={styles.label}>
@@ -215,7 +268,7 @@ const Registration = () => {
         
         {step === 1 ? (
           <>
-            {renderInput('fullName', 'Full Name', 'text', <FaUser />)}
+            {renderInput('full_name', 'Full Name', 'text', <FaUser />)}
             {renderInput('email', 'Email', 'email', <FaEnvelope />)}
             {renderInput('phone', 'Phone Number', 'tel', <FaPhone />)}
             {renderInput('password', 'Password', 'password', <FaLock />)}
@@ -276,16 +329,21 @@ const Registration = () => {
             <button
               onClick={handleBack}
               style={{ ...styles.button, ...styles.secondaryButton }}
+              disabled={isSubmitting} 
+
             >
               Back
             </button>
           )}
-          <button
-            onClick={handleNext}
-            style={{ ...styles.button, ...styles.primaryButton }}
-          >
-            {step === 1 ? 'Next' : 'Submit'}
-          </button>
+
+      <button
+        onClick={step === 1 ? handleNext : handleSubmit} 
+        style={{ ...styles.button, ...styles.primaryButton }}
+        disabled={isSubmitting}  
+      >
+        {step === 1 ? 'Next' : 'Submit'}
+      </button>
+
         </div>
       </div>
     </div>
