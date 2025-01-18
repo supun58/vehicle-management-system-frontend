@@ -1,12 +1,11 @@
 import React from "react";
-import { Car } from "lucide-react";
-import App from "../App";
-
+import { Car } from "lucide-react"; // Ensure this import is correct
+import App from "../App"; // Remove this if not needed, or keep if required
+import Navbar from "../components/NavBar";
 
 export default function Login() {
   return (
     <div className="min-h-screen flex flex-col lg:flex-row">
-
       {/* Logo Section */}
       <div className="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-maroon-700 via-ash-700 to-ash-500 flex-col items-center justify-center p-12">
         <div className="text-center">
@@ -18,13 +17,6 @@ export default function Login() {
             Streamlining University Operations: Efficiently Manage Resources,
             Events, and Student Services
           </p>
-          <span className="text-maroon-700 ">New visitor? </span>
-          <a
-            href="#"
-            className="text-maroon-600 hover:text-maroon-700 underline"
-          >
-            login here
-          </a>
         </div>
       </div>
 
