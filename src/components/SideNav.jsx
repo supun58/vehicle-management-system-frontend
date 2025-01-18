@@ -11,7 +11,7 @@ import {
   X,
 } from "lucide-react";
 
-function SideNav() {
+export default function SideNav() {
   const [isNavVisible, setNavVisible] = useState(false); // State for navbar visibility
 
   const navItems = [
@@ -42,7 +42,9 @@ function SideNav() {
       {isNavVisible && (
         <div className="fixed left-0 top-0 h-screen w-64 bg-maroon-800 text-ash-100 p-4 shadow-xl z-40">
           <div className="mb-8 px-4">
-            <h1 className="text-2xl font-bold">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;UniTransit</h1>
+            <h1 className="text-2xl font-bold">
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;UniTransit
+            </h1>
           </div>
           <nav className="space-y-2">
             {navItems.map((item, index) => (
@@ -61,5 +63,3 @@ function SideNav() {
     </div>
   );
 }
-
-export default SideNav;

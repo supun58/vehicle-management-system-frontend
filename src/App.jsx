@@ -14,30 +14,26 @@ import DriverDashboard from "./pages/DriverDashboard";
 
 function App() {
   return (
-
     <>
-    <Navbar/>
+      <Navbar />
+      <Routes>
+        {/* Login Page */}
+        <Route path="/" element={<Login />} />
 
-    <Routes>
-      {/* Login Page */}
-      <Route path="/" element={<Login />} />
+        {/*Registration Page */}
+        <Route path="/register" element={<Registration />} />
 
-      {/*Registration Page */}
-      <Route path="/register" element={<Registration />} />
+        {/* User Dashboard */}
+        <Route path="/user-dashboard" element={<UserDashboard />} />
 
-      {/* User Dashboard */}
-      <Route path="/user-dashboard" element={<UserDashboard />} />
+        {/* Vehicle Request Form */}
+        <Route path="/request-vehicle" element={<VehicleRequestForm />} />
 
-      {/* Vehicle Request Form */}
-      <Route path="/request-vehicle" element={<VehicleRequestForm />} />
-
-      {/* Driver dashboard*/}
-      <Route path="/driver-dashboard" element={<DriverDashboard />} />
-    </Routes>
-
-    <Footer/>
-  </>
-
+        {/* Driver dashboard*/}
+        <Route path="/driver-dashboard" element={<DriverDashboard />} />
+      </Routes>
+      <Footer />
+    </>
   );
 }
 

@@ -108,13 +108,6 @@ export default function Login() {
             Streamlining University Operations: Efficiently Manage Resources,
             Events, and Student Services
           </p>
-          <span className="text-maroon-700">New visitor? </span>
-          <a
-            href="#"
-            className="text-maroon-600 hover:text-maroon-700 underline"
-          >
-            login here
-          </a>
         </div>
       </div>
 
