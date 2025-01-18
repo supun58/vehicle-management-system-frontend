@@ -20,9 +20,11 @@ function Dashboard() {
               <p className="text-ash-600 mb-6">
                 Easily request a vehicle for your trips or official purposes.
               </p>
+              <a href="/request-vehicle">           
               <button className="w-full bg-maroon-700 text-white px-6 py-2 rounded-md hover:bg-maroon-600 transition duration-300">
                 Request Now
               </button>
+              </a> 
             </div>
 
             {/* Trip Details Card */}

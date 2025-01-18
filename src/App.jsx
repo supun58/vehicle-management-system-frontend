@@ -6,7 +6,7 @@ import Footer from "./components/footer";
 import Navbar from "./components/NavBar";
 
 //importing pages
-import Login from "./pages/Login";
+import Login from "./pages/login";
 import Registration from "./pages/Registration";
 import UserDashboard from "./pages/UserDashboard";
 import VehicleRequestForm from "./pages/VehicleRequestForm";
