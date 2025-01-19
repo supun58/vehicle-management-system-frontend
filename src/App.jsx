@@ -11,6 +11,7 @@ import Registration from "./pages/Registration";
 import UserDashboard from "./pages/UserDashboard";
 import VehicleRequestForm from "./pages/VehicleRequestForm";
 import DriverDashboard from "./pages/DriverDashboard";
+import AdminDashboard from "./pages/AdminDashboard";
 
 function App() {
   return (
@@ -31,6 +32,9 @@ function App() {
 
         {/* Driver dashboard*/}
         <Route path="/driver-dashboard" element={<DriverDashboard />} />
+
+        {/* Admin dashboard*/}
+        <Route path="/Admin-dashboard" element={<AdminDashboard />} />
       </Routes>
       <Footer />
     </>
