@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { FaUser, FaEnvelope, FaPhone, FaLock, FaIdCard } from 'react-icons/fa';
 import axios from 'axios';
+import Alert from '../components/Alert';
 
 const Registration = () => {
   const [step, setStep] = useState(1);
@@ -19,21 +20,21 @@ const Registration = () => {
     department: '',
     position: '',
     licenseNumber: '',
-    vehicleAssigned: ''
+    vehicleAssigned: '',
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
-
+  const [alert, setAlert] = useState({ visible: false, title: '', message: '' });
 
   const styles = {
     container: {
       minHeight: '100vh',
       background: 'linear-gradient(135deg, #f6f8fb 0%, #e9edf3 100%)',
-      padding: '0.5rem 1rem', 
-      marginTop: '4rem',    
+      padding: '0.5rem 1rem',
+      marginTop: '4rem',
     },
     formCard: {
-      maxWidth: '400px', 
+      maxWidth: '400px',
       margin: '0 auto',
       background: 'white',
       borderRadius: '16px',
@@ -42,7 +43,7 @@ const Registration = () => {
     },
     title: {
       color: '#2d3748',
-      fontSize: '1.5rem', 
+      fontSize: '1.5rem',
       fontWeight: '700',
       textAlign: 'center',
       marginBottom: '1.5rem',
@@ -53,7 +54,7 @@ const Registration = () => {
       margin: '0 auto 1.5rem',
     },
     formGroup: {
-      marginBottom: '0.65rem', 
+      marginBottom: '0.65rem',
     },
     label: {
       display: 'block',
@@ -64,7 +65,7 @@ const Registration = () => {
     },
     input: {
       width: '100%',
-      padding: '0.4rem 0.65rem', 
+      padding: '0.4rem 0.65rem',
       border: '2px solid #e2e8f0',
       borderRadius: '8px',
       fontSize: '0.875rem',
@@ -74,7 +75,7 @@ const Registration = () => {
     },
     select: {
       width: '100%',
-      padding: '0.4rem 0.65rem', 
+      padding: '0.4rem 0.65rem',
       border: '2px solid #e2e8f0',
       borderRadius: '8px',
       fontSize: '0.875rem',
@@ -89,11 +90,11 @@ const Registration = () => {
     buttonGroup: {
       display: 'flex',
       gap: '1rem',
-      marginTop: '0.8rem', 
+      marginTop: '0.8rem',
     },
     button: {
       flex: 1,
-      padding: '0.4rem 1rem', 
+      padding: '0.4rem 1rem',
       borderRadius: '8px',
       border: 'none',
       fontSize: '0.875rem',
@@ -116,19 +117,10 @@ const Registration = () => {
       marginRight: '0.5rem',
     },
   };
-  
 
-  const validateEmail = (email) => {
-    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-  };
-
-  const validatePhone = (phone) => {
-    return /^\d{10}$/.test(phone);
-  };
-
-  const validatePassword = (password) => {
-    return password.length >= 6;
-  };
+  const validateEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  const validatePhone = (phone) => /^\d{10}$/.test(phone);
+  const validatePassword = (password) => password.length >= 6;
 
   const validateStep1 = () => {
     const newErrors = {};
@@ -166,6 +158,8 @@ const Registration = () => {
       case 'driver':
         if (!formData.licenseNumber) newErrors.licenseNumber = 'License number is required';
         break;
+      default:
+        break;
     }
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -173,9 +167,9 @@ const Registration = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
+    setFormData((prev) => ({ ...prev, [name]: value }));
     if (errors[name]) {
-      setErrors(prev => ({ ...prev, [name]: '' }));
+      setErrors((prev) => ({ ...prev, [name]: '' }));
     }
   };
 
@@ -183,7 +177,7 @@ const Registration = () => {
     if (step === 1 && validateStep1()) {
       setStep(2);
     } else if (step === 2 && validateStep2()) {
-      handleSubmit(); 
+      handleSubmit();
     }
   };
 
@@ -191,16 +185,12 @@ const Registration = () => {
     setStep(1);
   };
 
-    
   const handleSubmit = async (e) => {
-    e.preventDefault(); 
-    setIsSubmitting(true); 
-  
+    setIsSubmitting(true);
+
     try {
       const response = await axios.post('http://localhost:5000/api/auth/register', formData);
-  
-      alert(response.data.message);
-  
+      setAlert({ visible: true, title: 'Success', message: response.data.message });
       setFormData({
         full_name: '',
         email: '',
@@ -217,29 +207,15 @@ const Registration = () => {
         licenseNumber: '',
         vehicleAssigned: '',
       });
-      setStep(1); 
-     } 
-     catch (error) {
-      console.error('Error registering user:', error);
-  
-      if (error.response) {
-        // Extract error message or fallback to default
-        const errorMessage = error.response.data.message || 'Something went wrong on the server';
-        alert(`Registration failed: ${errorMessage}`);
-      } else if (error.request) {
-        // No response was received
-        alert('Registration failed: No response from the server');
-      } else {
-        // Other errors (e.g., network issues)
-        alert(`Registration failed: ${error.message}`);
-      }
+      setStep(1);
+    } catch (error) {
+      const errorMessage = error.response.data.error ;
+      setAlert({ visible: true, title: 'Error', message: `Registration failed: ${errorMessage}` });
     } finally {
       setIsSubmitting(false);
     }
   };
-  
-  
-  
+
   const renderInput = (name, label, type = 'text', icon = null) => (
     <div style={styles.formGroup}>
       <label style={styles.label}>
@@ -263,9 +239,16 @@ const Registration = () => {
 
   return (
     <div style={styles.container}>
+      {alert.visible && (
+        <Alert
+          title={alert.title}
+          message={alert.message}
+          setAlertVisible={(visible) => setAlert((prev) => ({ ...prev, visible }))}
+        />
+      )}
       <div style={styles.formCard}>
         <h2 style={styles.title}>Registration Form - Step {step}</h2>
-        
+
         {step === 1 ? (
           <>
             {renderInput('full_name', 'Full Name', 'text', <FaUser />)}
@@ -273,7 +256,7 @@ const Registration = () => {
             {renderInput('phone', 'Phone Number', 'tel', <FaPhone />)}
             {renderInput('password', 'Password', 'password', <FaLock />)}
             {renderInput('confirmPassword', 'Confirm Password', 'password', <FaLock />)}
-            
+
             <div style={styles.formGroup}>
               <label style={styles.label}>Role</label>
               <select
@@ -300,21 +283,21 @@ const Registration = () => {
                 {renderInput('level', 'Level')}
               </>
             )}
-            
+
             {formData.role === 'lecturer' && (
               <>
                 {renderInput('staffId', 'Staff ID', 'text', <FaIdCard />)}
                 {renderInput('department', 'Department')}
               </>
             )}
-            
+
             {formData.role === 'nonAcademic' && (
               <>
                 {renderInput('staffId', 'Staff ID', 'text', <FaIdCard />)}
                 {renderInput('position', 'Position')}
               </>
             )}
-            
+
             {formData.role === 'driver' && (
               <>
                 {renderInput('licenseNumber', 'License Number', 'text', <FaIdCard />)}
@@ -329,21 +312,19 @@ const Registration = () => {
             <button
               onClick={handleBack}
               style={{ ...styles.button, ...styles.secondaryButton }}
-              disabled={isSubmitting} 
-
+              disabled={isSubmitting}
             >
               Back
             </button>
           )}
 
-      <button
-        onClick={step === 1 ? handleNext : handleSubmit} 
-        style={{ ...styles.button, ...styles.primaryButton }}
-        disabled={isSubmitting}  
-      >
-        {step === 1 ? 'Next' : 'Submit'}
-      </button>
-
+          <button
+            onClick={handleNext}
+            style={{ ...styles.button, ...styles.primaryButton }}
+            disabled={isSubmitting}
+          >
+            {step === 1 ? 'Next' : 'Submit'}
+          </button>
         </div>
       </div>
     </div>
