@@ -46,6 +46,8 @@ export default function Login() {
         axios.defaults.headers.common["Authorization"] = `Bearer ${response.data.token}`;
         sessionStorage.setItem("token", response.data.token);
         sessionStorage.setItem("role", response.data.role);
+        sessionStorage.setItem("full_name", response.data.full_name); 
+
 
         // Redirect based on user role
         if (response.data.role === "student") {

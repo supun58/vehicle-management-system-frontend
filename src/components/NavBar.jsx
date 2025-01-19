@@ -5,7 +5,8 @@ import SideNav from "./SideNav"; // Ensure SideNav is implemented
 
 export default function Navbar() {
   const location = useLocation(); // Get the current route
-  const role = sessionStorage.getItem("role") || "User"; // Get user role
+  //const role = sessionStorage.getItem("role") || "User"; // Get user role
+  const fullName = sessionStorage.getItem("full_name") || "User"; // Get user full name
 
   return (
     <nav className="bg-maroon-800 text-ash-100 shadow-xl fixed top-0 left-0 w-full z-50">
@@ -24,25 +25,25 @@ export default function Navbar() {
           {/* Conditional Rendering */}
           <div className="flex items-center space-x-4">
             {/* Welcome Message */}
-            {location.pathname !== "/" && (
-              <span className="text-ash-200">Welcome, {role}</span>
+            {(location.pathname !== "/" && location.pathname!=="/register" && location.pathname!=="/visitor") && (
+              <span className="text-ash-200">Welcome, {fullName}</span>
             )}
 
             {/* Show Visitor Link on Login Page */}
-            {location.pathname === "/" && (
+            {(location.pathname === "/" || location.pathname==="/register" )&& (
               <span className="text-white">
-                Are you a visitor?{" "}
-                <a
-                  href="/visitor"
-                  className="text-red-500 underline hover:text-red-700 transition duration-300"
+                Are you a visitor?&nbsp;{" "}
+                <button
+                  className="bg-[#de9e28] text-white px-4 py-2 rounded-md hover:bg-gray-600 transition duration-300"
+                  onClick={() => (window.location.href = "/visitor")} // Redirect to "/visitor"
                 >
                   Visit here
-                </a>
+                </button>
               </span>
             )}
 
             {/* Show Logout Button on Other Pages */}
-            {location.pathname !== "/" && (
+            {(location.pathname !== "/" && location.pathname!=="/register" && location.pathname!=="/visitor") && (
               <button
                 className="bg-ash-600 text-white px-4 py-2 rounded-md hover:bg-ash-500 transition duration-300"
                 onClick={() => {
