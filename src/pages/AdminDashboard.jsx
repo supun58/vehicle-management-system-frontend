@@ -1,5 +1,12 @@
 import React from "react";
-import { Car, Calendar, MessageSquare, Trash, PlusCircle } from "lucide-react";
+import {
+  Car,
+  Calendar,
+  MessageSquare,
+  Trash,
+  PlusCircle,
+  X,
+} from "lucide-react";
 
 function AdminDashboard() {
   return (
@@ -86,6 +93,21 @@ function AdminDashboard() {
               </p>
               <button className="w-full bg-maroon-700 text-white px-6 py-2 rounded-md hover:bg-maroon-600 transition duration-300">
                 Remove Users
+              </button>
+            </div>
+            {/* pending requests */}
+            <div className="bg-white/90 backdrop-blur-sm rounded-xl shadow-2xl p-6 hover:transform hover:-translate-y-2 transition duration-300">
+              <div className="flex items-center mb-4">
+                <X className="h-6 w-6 text-red-600" />
+                <h3 className="ml-2 text-xl font-bold text-maroon-700">
+                  Pending Requests
+                </h3>
+              </div>
+              <p className="text-ash-600 mb-6">
+                Analyze and approve pending requests from users.
+              </p>
+              <button className="w-full bg-maroon-700 text-white px-6 py-2 rounded-md hover:bg-maroon-600 transition duration-300">
+                Pending Requests
               </button>
             </div>
           </div>

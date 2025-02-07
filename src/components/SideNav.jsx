@@ -18,8 +18,8 @@ export default function SideNav() {
     { icon: <Home size={20} />, label: "Home", href: "/" },
     { icon: <LogIn size={20} />, label: "Login", href: "/login" },
     { icon: <Info size={20} />, label: "About", href: "/about" },
-    { icon: <Truck size={20} />, label: "Driver", href: "/driver" },
-    { icon: <Users size={20} />, label: "User", href: "/user" },
+    { icon: <Truck size={20} />, label: "Driver", href: "/driver-dashboard" },
+    { icon: <Users size={20} />, label: "User", href: "/user-dashboard" },
     { icon: <Shield size={20} />, label: "Guard", href: "/guard" },
     {
       icon: <LayoutDashboard size={20} />,

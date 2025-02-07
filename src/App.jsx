@@ -12,6 +12,9 @@ import UserDashboard from "./pages/UserDashboard";
 import VehicleRequestForm from "./pages/VehicleRequestForm";
 import DriverDashboard from "./pages/DriverDashboard";
 import AdminDashboard from "./pages/AdminDashboard";
+import Admin1Dashboard from "./pages/Admin1Dashboard";
+import AboutUs from "./pages/AboutUs";
+import Profile from "./pages/Profile";
 
 function App() {
   return (
@@ -35,7 +38,17 @@ function App() {
 
         {/* Admin dashboard*/}
         <Route path="/Admin-dashboard" element={<AdminDashboard />} />
+
+        {/* Admin1 dashboard*/}
+        <Route path="/Admin1-dashboard" element={<Admin1Dashboard />} />
+
+        {/* About Us*/}
+        <Route path="/about-us" element={<AboutUs />} />
+
+        {/*Profile*/}
+        <Route path="/profile" element={<Profile />} />
       </Routes>
+
       <Footer />
     </>
   );
