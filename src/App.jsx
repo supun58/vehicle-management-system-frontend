@@ -15,6 +15,7 @@ import AdminDashboard from "./pages/AdminDashboard";
 import Admin1Dashboard from "./pages/Admin1Dashboard";
 import AboutUs from "./pages/AboutUs";
 import VisitorForm from "./pages/GatePassForm";
+import PendingRequests from "./pages/Admin-Dashboard/PendingRequests.jsx";
 
 function App() {
   return (
@@ -47,6 +48,10 @@ function App() {
 
         {/* Visitor Form */}
         <Route path="/visitor" element={<VisitorForm />} />
+
+        {/*pending requests */}
+        <Route path="/pending-requests" element={<PendingRequests />} />
+      
       </Routes>
 
       <Footer />

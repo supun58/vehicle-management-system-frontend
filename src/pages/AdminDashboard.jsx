@@ -106,7 +106,11 @@ function AdminDashboard() {
               <p className="text-ash-600 mb-6">
                 Analyze and approve pending requests from users.
               </p>
-              <button className="w-full bg-maroon-700 text-white px-6 py-2 rounded-md hover:bg-maroon-600 transition duration-300">
+              <button 
+              onClick={() => {
+                window.location.href = "/pending-requests";
+              }}
+              className="w-full bg-maroon-700 text-white px-6 py-2 rounded-md hover:bg-maroon-600 transition duration-300">
                 Pending Requests
               </button>
             </div>
