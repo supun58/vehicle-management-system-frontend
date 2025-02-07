@@ -16,6 +16,7 @@ import Admin1Dashboard from "./pages/Admin1Dashboard";
 import AboutUs from "./pages/AboutUs";
 import VisitorForm from "./pages/GatePassForm";
 import PendingRequests from "./pages/Admin-Dashboard/PendingRequests.jsx";
+import GuardDashboard from "./pages/GatePassForm.jsx";
 
 function App() {
   return (
@@ -43,6 +44,9 @@ function App() {
         {/* Admin1 dashboard*/}
         <Route path="/Admin1-dashboard" element={<Admin1Dashboard />} />
 
+        {/*Guard dashboard */}
+        <Route path="/guard-dashboard" element={<GuardDashboard />} />
+
         {/* About Us*/}
         <Route path="/about-us" element={<AboutUs />} />
 
@@ -51,7 +55,6 @@ function App() {
 
         {/*pending requests */}
         <Route path="/pending-requests" element={<PendingRequests />} />
-      
       </Routes>
 
       <Footer />
