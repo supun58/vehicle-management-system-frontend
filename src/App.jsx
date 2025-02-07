@@ -12,6 +12,7 @@ import UserDashboard from "./pages/UserDashboard";
 import VehicleRequestForm from "./pages/VehicleRequestForm";
 import DriverDashboard from "./pages/DriverDashboard";
 import AdminDashboard from "./pages/AdminDashboard";
+import VisitorForm from "./pages/GatePassForm";
 
 function App() {
   return (
@@ -35,6 +36,10 @@ function App() {
 
         {/* Admin dashboard*/}
         <Route path="/Admin-dashboard" element={<AdminDashboard />} />
+
+        {/* Visitor Form */}
+        <Route path="/visitor" element={<VisitorForm />} />
+
       </Routes>
       <Footer />
     </>

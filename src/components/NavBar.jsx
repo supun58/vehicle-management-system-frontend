@@ -37,7 +37,7 @@ export default function Navbar() {
                   className="bg-[#de9e28] text-white px-4 py-2 rounded-md hover:bg-gray-600 transition duration-300"
                   onClick={() => (window.location.href = "/visitor")} // Redirect to "/visitor"
                 >
-                  Visit here
+                  Gate Pass
                 </button>
               </span>
             )}

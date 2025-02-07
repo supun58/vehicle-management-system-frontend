@@ -59,6 +59,9 @@ export default function Login() {
         } else if (response.data.role === "nonAcademic") {
           navigate("/user-dashboard");
         }
+        else if (response.data.role === "admin") {
+          navigate("/admin-dashboard");
+        }
 
         setAlertTitle("Success");
         setAlertMessage("Login successful!");
