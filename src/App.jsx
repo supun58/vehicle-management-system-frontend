@@ -14,7 +14,7 @@ import DriverDashboard from "./pages/DriverDashboard";
 import AdminDashboard from "./pages/AdminDashboard";
 import Admin1Dashboard from "./pages/Admin1Dashboard";
 import AboutUs from "./pages/AboutUs";
-import Profile from "./pages/Profile";
+import VisitorForm from "./pages/GatePassForm";
 
 function App() {
   return (
@@ -45,8 +45,8 @@ function App() {
         {/* About Us*/}
         <Route path="/about-us" element={<AboutUs />} />
 
-        {/*Profile*/}
-        <Route path="/profile" element={<Profile />} />
+        {/* Visitor Form */}
+        <Route path="/visitor" element={<VisitorForm />} />
       </Routes>
 
       <Footer />
