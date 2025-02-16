@@ -16,7 +16,7 @@ import Admin1Dashboard from "./pages/Admin1Dashboard";
 import AboutUs from "./pages/AboutUs";
 import VisitorForm from "./pages/GatePassForm";
 import PendingRequests from "./pages/Admin-Dashboard/PendingRequests.jsx";
-import GuardDashboard from "./pages/GatePassForm.jsx";
+import GuardDashboard from "./pages/GuardDashboard.jsx";
 import RequestDetails from "./pages/Admin-Dashboard/RequestDetails.jsx";
 import RequestStatus from "./pages/Admin-Dashboard/RequestStatus.jsx";
 
