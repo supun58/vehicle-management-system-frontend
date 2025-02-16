@@ -17,6 +17,8 @@ import AboutUs from "./pages/AboutUs";
 import VisitorForm from "./pages/GatePassForm";
 import PendingRequests from "./pages/Admin-Dashboard/PendingRequests.jsx";
 import GuardDashboard from "./pages/GatePassForm.jsx";
+import RequestDetails from "./pages/Admin-Dashboard/RequestDetails.jsx";
+import RequestStatus from "./pages/Admin-Dashboard/RequestStatus.jsx";
 
 function App() {
   return (
@@ -55,7 +57,15 @@ function App() {
 
         {/*pending requests */}
         <Route path="/pending-requests" element={<PendingRequests />} />
+
+        {/* Request Details */}
+        <Route path="/request-details/:id" element={<RequestDetails />} />
+
+      {/* Request Status */}
+      <Route path="/request-status/:id" element={<RequestStatus />} />
+
       </Routes>
+
 
       <Footer />
     </>
