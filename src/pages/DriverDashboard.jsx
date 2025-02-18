@@ -53,7 +53,7 @@ function DriverDashboard() {
                 <h3 className="text-xl font-bold text-ash-800">Start Day</h3>
                 <Clock className="h-6 w-6 text-maroon-600" />
               </div>
-              <button className="w-full bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg transition duration-300">
+              <button className="w-full bg-maroon-700 hover:bg-maroon-800  text-white px-4 py-2 rounded-lg transition duration-300">
                 Start
               </button>
             </div>
@@ -64,7 +64,7 @@ function DriverDashboard() {
                 <h3 className="text-xl font-bold text-ash-800">End Day</h3>
                 <Clock className="h-6 w-6 text-maroon-600" />
               </div>
-              <button className="w-full bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg transition duration-300">
+              <button className="w-full bg-maroon-700 hover:bg-maroon-800  text-white px-4 py-2 rounded-lg transition duration-300">
                 End
               </button>
             </div>
@@ -75,7 +75,7 @@ function DriverDashboard() {
                 <h3 className="text-xl font-bold text-ash-800">Emergency</h3>
                 <AlertTriangle className="h-6 w-6 text-maroon-600" />
               </div>
-              <button className="w-full bg-yellow-600 hover:bg-yellow-700 text-white px-4 py-2 rounded-lg transition duration-300">
+              <button className="w-full bg-maroon-700 hover:bg-maroon-800  text-white px-4 py-2 rounded-lg transition duration-300">
                 Report
               </button>
             </div>

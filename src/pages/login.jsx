@@ -1,11 +1,16 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { GrFormView, GrFormViewHide } from "react-icons/gr";
 import { Car } from "lucide-react";
 import Alert from "../components/Alert";
+import bg1 from "../assets/bg1.jpg";
+import bg2 from "../assets/bg2.jpg";
+import bg3 from "../assets/bg3.jpg";
 
 export default function Login() {
+  const images = [bg1, bg2, bg3];
+  const [currentImage, setCurrentImage] = useState(0); // Define state for current image
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -14,6 +19,13 @@ export default function Login() {
   const [alertMessage, setAlertMessage] = useState(""); // State for alert message
   const navigate = useNavigate();
 
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentImage((prevImage) => (prevImage + 10) % images.length);
+    }, 3000);
+
+    return () => clearInterval(interval); // Cleanup on unmount
+  }, []);
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
@@ -43,11 +55,12 @@ export default function Login() {
     axios
       .post("http://localhost:5000/api/auth/login", { email, password })
       .then((response) => {
-        axios.defaults.headers.common["Authorization"] = `Bearer ${response.data.token}`;
+        axios.defaults.headers.common[
+          "Authorization"
+        ] = `Bearer ${response.data.token}`;
         sessionStorage.setItem("token", response.data.token);
         sessionStorage.setItem("role", response.data.role);
-        sessionStorage.setItem("full_name", response.data.full_name); 
-
+        sessionStorage.setItem("full_name", response.data.full_name);
 
         // Redirect based on user role
         if (response.data.role === "student") {
@@ -58,8 +71,7 @@ export default function Login() {
           navigate("/driver-dashboard");
         } else if (response.data.role === "nonAcademic") {
           navigate("/user-dashboard");
-        }
-        else if (response.data.role === "admin") {
+        } else if (response.data.role === "admin") {
           navigate("/admin-dashboard");
         }
 
@@ -70,7 +82,9 @@ export default function Login() {
       .catch((error) => {
         if (error.response) {
           setAlertTitle("Login Failed");
-          setAlertMessage(error.response.data.message || "Invalid email or password");
+          setAlertMessage(
+            error.response.data.message || "Invalid email or password"
+          );
         } else {
           setAlertTitle("Error");
           setAlertMessage("An error occurred. Please try again.");
@@ -89,14 +103,25 @@ export default function Login() {
 
   return (
     <div className="min-h-screen flex flex-col lg:flex-row">
-      <div className="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-maroon-700 via-ash-700 to-ash-500 flex-col items-center justify-center p-12">
+      {/* Left Section with Dynamic Background */}
+      <div
+        className="hidden lg:flex lg:w-1/2 flex-col items-center justify-center p-12 transition-all duration-1000"
+        style={{
+          backgroundImage: `url(${images[currentImage]})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+        }}
+      >
         <div className="text-center">
           <div className="h-20 w-20 text-ash-200 mx-auto mb-6">
             <Car className="h-full w-full text-ash-200" />
           </div>
-          <h1 className="text-4xl font-bold text-ash-100 mb-4">University of Ruhuna</h1>
+          <h1 className="text-4xl font-bold text-ash-100 mb-4">
+            University of Ruhuna
+          </h1>
           <p className="text-ash-300 text-lg max-w-md">
-            Streamlining University Operations: Efficiently Manage Resources, Events, and Student Services
+            Streamlining University Operations: Efficiently Manage Resources,
+            Events, and Student Services
           </p>
         </div>
       </div>
@@ -116,7 +141,10 @@ export default function Login() {
 
           <form className="space-y-4">
             <div>
-              <label htmlFor="email" className="block text-sm font-medium text-ash-700">
+              <label
+                htmlFor="email"
+                className="block text-sm font-medium text-ash-700"
+              >
                 Email Address
               </label>
               <input
@@ -131,7 +159,10 @@ export default function Login() {
               />
             </div>
             <div className="relative">
-              <label htmlFor="password" className="block text-sm font-medium text-ash-700">
+              <label
+                htmlFor="password"
+                className="block text-sm font-medium text-ash-700"
+              >
                 Password
               </label>
               <input
@@ -150,7 +181,11 @@ export default function Login() {
                   onClick={togglePasswordVisibility}
                   className="absolute inset-y-0 right-2 top-6 flex justify-center items-center focus:outline-none"
                 >
-                  {showPassword ? <GrFormViewHide size={24} /> : <GrFormView size={24} />}
+                  {showPassword ? (
+                    <GrFormViewHide size={24} />
+                  ) : (
+                    <GrFormView size={24} />
+                  )}
                 </button>
               )}
             </div>

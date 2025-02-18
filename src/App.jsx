@@ -61,11 +61,9 @@ function App() {
         {/* Request Details */}
         <Route path="/request-details/:id" element={<RequestDetails />} />
 
-      {/* Request Status */}
-      <Route path="/request-status/:id" element={<RequestStatus />} />
-
+        {/* Request Status */}
+        <Route path="/request-status/:id" element={<RequestStatus />} />
       </Routes>
-
 
       <Footer />
     </>
