@@ -1,14 +1,28 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import bg1 from "../assets/bg1.jpg";
+import bg2 from "../assets/bg2.jpg";
+import bg3 from "../assets/bg3.jpg";
 
-const AboutUs = () => {
+export default function AboutUs() {
+  const images = [bg1, bg2, bg3];
+  const [currentImage, setCurrentImage] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentImage((prevImage) => (prevImage + 10) % images.length);
+    }, 3000);
+
+    return () => clearInterval(interval);
+  });
   return (
     <div className="relative w-full h-screen">
       {/* Background Image */}
       <div
         className="absolute inset-0 bg-cover bg-center"
         style={{
-          backgroundImage:
-            "url('https://media.licdn.com/dms/image/v2/C4E1BAQGUGhRlEXo2-Q/company-background_10000/company-background_10000/0/1583866513572?e=1739206800&v=beta&t=1N6LJXlVj6cnpLowBPi9AWTzIHqlHbP1pLhyW1p6QaU')",
+          backgroundImage: `url(${images[currentImage]})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
         }}
       ></div>
 
@@ -36,29 +50,27 @@ const AboutUs = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 bg-opacity-75">
             <div className="bg-white p-8 rounded-lg shadow-lg text-center">
               <h3 className="text-xl font-semibold text-gray-800 mb-4">
-                Web Development
+                Vehicle Management
               </h3>
               <p className="text-gray-600">
-                Building responsive, user-friendly websites with the latest web
-                technologies.
+                Requesting vehicles for official purposes and tracking their
+                status.
               </p>
             </div>
             <div className="bg-white p-8 rounded-lg shadow-lg text-center">
               <h3 className="text-xl font-semibold text-gray-800 mb-4">
-                Mobile App Development
+                Visitor Management
               </h3>
               <p className="text-gray-600">
-                Developing high-quality mobile applications for iOS and Android
-                platforms.
+                Managing visitors and ensuring a secure environment for all.
               </p>
             </div>
             <div className="bg-white p-8 rounded-lg shadow-lg text-center">
               <h3 className="text-xl font-semibold text-gray-800 mb-4">
-                Machine Learning
+                Driver Management
               </h3>
               <p className="text-gray-600">
-                Implementing AI and machine learning algorithms to solve complex
-                problems.
+                Assigning drivers to vehicles and tracking their performance.
               </p>
             </div>
           </div>
@@ -66,6 +78,4 @@ const AboutUs = () => {
       </div>
     </div>
   );
-};
-
-export default AboutUs;
+}
