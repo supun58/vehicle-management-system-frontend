@@ -343,7 +343,7 @@ const VisitorForm = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 py-4 px-4 sm:px-6 lg:px-8 mt-14">
+    <div className="min-h-screen bg-gray-100 py-3 px-4 sm:px-6 lg:px-8 mt-14">
       {alert.visible && (
         <Alert
           title={alert.title}
@@ -353,7 +353,7 @@ const VisitorForm = () => {
           }
         />
       )}
-      <div className="max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden">
+      <div className="max-w-md mx-auto bg-white rounded-xl shadow-lg overflow-hidden">
         <div className="bg-[#800000] p-2">
           <h2 className="text-xl font-bold text-white text-center">
             Visitor Gate Pass Request
@@ -361,37 +361,38 @@ const VisitorForm = () => {
           <StepIndicator currentStep={step} />
         </div>
 
-        <form onSubmit={handleSubmit(onSubmit)} className="p-4 space-y-2">
+        <form onSubmit={handleSubmit(onSubmit)} className="p-4 space-y-2 bg-gray-100">
           {step === 1 && (
-            <div className="space-y-2">
+            <div className="space-y-1">
               <FormInput
-                label="Full Name"
+                label="Full Name:"
                 name="visitor_name"
                 register={register}
                 error={errors.visitor_name}
+                className="focus:ring-2 focus:ring-[#de9e28] focus:border-[#de9e28]"
               />
               <FormInput
-                label="Email"
+                label="Email:"
                 name="visitor_email"
                 type="email"
                 register={register}
                 error={errors.visitor_email}
               />
               <FormInput
-                label="Phone Number"
+                label="Phone Number:"
                 name="phone"
                 register={register}
                 error={errors.phone}
               />
               <FormInput
-                label="NIC Number"
+                label="NIC Number:"
                 name="nic"
                 register={register}
                 error={errors.nic}
               />
               <div>
                 <label className="block text-sm font-medium text-gray-700">
-                  Purpose of Visit
+                  Purpose of Visit:
                 </label>
                 <textarea
                   {...register("purpose")}
@@ -410,7 +411,7 @@ const VisitorForm = () => {
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700">
-                  Supporting Document (Optional)
+                  Supporting Document (Optional):
                 </label>
                 <input
                   type="file"
@@ -434,7 +435,7 @@ const VisitorForm = () => {
                 </p>
               </div>
               <FormInput
-                label="Person/Department to Meet"
+                label="Person/Department to Meet:"
                 name="meeting_person"
                 register={register}
                 error={errors.meeting_person}

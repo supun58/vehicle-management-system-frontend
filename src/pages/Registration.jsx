@@ -158,6 +158,11 @@ const Registration = () => {
       case 'driver':
         if (!formData.licenseNumber) newErrors.licenseNumber = 'License number is required';
         break;
+      case 'guard':
+        if (!formData.staffId) newErrors.staffId = 'Staff ID is required';
+        if (!formData.position) newErrors.position = 'Position is required';
+        break;
+
       default:
         break;
     }
@@ -270,6 +275,7 @@ const Registration = () => {
                 <option value="lecturer">Lecturer</option>
                 <option value="nonAcademic">Non Academic</option>
                 <option value="driver">Driver</option>
+                <option value="guard">Guard</option>
               </select>
               {errors.role && <div style={styles.error}>{errors.role}</div>}
             </div>
@@ -302,6 +308,13 @@ const Registration = () => {
               <>
                 {renderInput('licenseNumber', 'License Number', 'text', <FaIdCard />)}
                 {renderInput('vehicleAssigned', 'Vehicle Assigned (Optional)')}
+              </>
+            )}
+
+{formData.role === 'guard' && (
+              <>
+                {renderInput('staffId', 'Staff ID', 'text', <FaIdCard />)}
+                {renderInput('position', 'Position')}
               </>
             )}
           </>

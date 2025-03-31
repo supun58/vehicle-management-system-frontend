@@ -25,7 +25,7 @@ export default function Navbar() {
           {/* Conditional Rendering */}
           <div className="flex items-center space-x-4">
             {/* Welcome Message */}
-            {(location.pathname !== "/" && location.pathname!=="/register" && location.pathname!=="/visitor") && (
+            {(location.pathname !== "/" && location.pathname!=="/register" && location.pathname!=="/visitor" && location.pathname!=="/about-us") && (
               <span className="text-ash-200">Welcome, {fullName}</span>
             )}
 
@@ -43,7 +43,7 @@ export default function Navbar() {
             )}
 
             {/* Show Logout Button on Other Pages */}
-            {(location.pathname !== "/" && location.pathname!=="/register" && location.pathname!=="/visitor") && (
+            {(location.pathname !== "/" && location.pathname!=="/register" && location.pathname!=="/visitor" && location.pathname!=="/about-us") && (
               <button
                 className="bg-ash-600 text-white px-4 py-2 rounded-md hover:bg-ash-500 transition duration-300"
                 onClick={() => {

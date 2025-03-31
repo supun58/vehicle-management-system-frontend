@@ -19,6 +19,7 @@ import PendingRequests from "./pages/Admin-Dashboard/PendingRequests.jsx";
 import GuardDashboard from "./pages/GuardDashboard.jsx";
 import RequestDetails from "./pages/Admin-Dashboard/RequestDetails.jsx";
 import RequestStatus from "./pages/Admin-Dashboard/RequestStatus.jsx";
+import UserManagement from "./pages/Admin-Dashboard/UserManagement.jsx";
 
 function App() {
   return (
@@ -57,6 +58,9 @@ function App() {
 
         {/*pending requests */}
         <Route path="/pending-requests" element={<PendingRequests />} />
+
+        {/* User Management */}
+        <Route path="/user-management" element={<UserManagement />} />
 
         {/* Request Details */}
         <Route path="/request-details/:id" element={<RequestDetails />} />

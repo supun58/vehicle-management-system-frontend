@@ -3,7 +3,7 @@ import {
   Car,
   Calendar,
   MessageSquare,
-  Trash,
+  Users,
   PlusCircle,
   X,
 } from "lucide-react";
@@ -11,6 +11,7 @@ import {
 function AdminDashboard() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-maroon-700 via-ash-700 to-ash-500">
+      
       {/* Main Content */}
       <main className="pt-20">
         <div className="container mx-auto px-4 py-8">
@@ -80,21 +81,27 @@ function AdminDashboard() {
               </button>
             </div>
 
-            {/* Remove Users */}
+            {/* User Managament */}
             <div className="bg-white/90 backdrop-blur-sm rounded-xl shadow-2xl p-6 hover:transform hover:-translate-y-2 transition duration-300">
               <div className="flex items-center mb-4">
-                <Trash className="h-6 w-6 text-red-600" />
+                <Users className="h-6 w-6 text-red-600" />
                 <h3 className="ml-2 text-xl font-bold text-maroon-700">
-                  Remove Users
+                  User Management
                 </h3>
               </div>
               <p className="text-ash-600 mb-6">
-                Remove inactive or unauthorized users from the system.
-              </p>
-              <button className="w-full bg-maroon-700 text-white px-6 py-2 rounded-md hover:bg-maroon-600 transition duration-300">
-                Remove Users
+              Handle user accounts, permissions & access levels.
+                            </p>
+
+              <button 
+              onClick={() => {
+                window.location.href = "/user-management";
+              }}
+              className="w-full bg-maroon-700 text-white px-6 py-2 rounded-md hover:bg-maroon-600 transition duration-300">
+                Manage Users
               </button>
             </div>
+
             {/* pending requests */}
             <div className="bg-white/90 backdrop-blur-sm rounded-xl shadow-2xl p-6 hover:transform hover:-translate-y-2 transition duration-300">
               <div className="flex items-center mb-4">
