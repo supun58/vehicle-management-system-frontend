@@ -45,6 +45,13 @@ function DriverDashboard() {
       {/* Main Content */}
       <main className="pt-20 px-4 md:px-8">
         <div className="max-w-7xl mx-auto grid gap-6">
+
+          {/* Header Section */}
+          <div className="mb-8 text-center">
+            <h1 className="text-3xl font-bold text-white mb-2">Driver Dashboard</h1>
+            <p className="text-ash-200">Manage your transportation system efficiently</p>
+          </div>
+
           {/* Action Cards */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {/* Start Day Card */}

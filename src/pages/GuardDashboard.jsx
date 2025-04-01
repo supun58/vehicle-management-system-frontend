@@ -42,6 +42,13 @@ function GuardDashboard() {
       {/* Main Content */}
       <main className="container mx-auto px-4 py-12 min-h-screen flex items-center justify-center">
         <div className="w-full max-w-6xl">
+
+          {/* Header Section */}
+          <div className="mb-8 text-center">
+            <h1 className="text-3xl font-bold text-white mb-2">Guard Dashboard</h1>
+            <p className="text-ash-200">Manage your transportation system efficiently</p>
+          </div>
+
           {/* Cards Section */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {/* Scan QR Code Card */}

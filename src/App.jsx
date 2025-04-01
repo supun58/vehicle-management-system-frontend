@@ -5,6 +5,9 @@ import { Routes, Route } from "react-router-dom";
 import Footer from "./components/footer";
 import Navbar from "./components/NavBar";
 
+//importing controllers
+import { AuthProvider } from "./controllers/authcontext";
+
 //importing pages
 import Login from "./pages/login";
 import Registration from "./pages/Registration";
@@ -12,7 +15,7 @@ import UserDashboard from "./pages/UserDashboard";
 import VehicleRequestForm from "./pages/VehicleRequestForm";
 import DriverDashboard from "./pages/DriverDashboard";
 import AdminDashboard from "./pages/AdminDashboard";
-import Admin1Dashboard from "./pages/Admin1Dashboard";
+import Admin1Dashboard from "./pages/FacultyAdminDashboard.jsx";
 import AboutUs from "./pages/AboutUs";
 import VisitorForm from "./pages/GatePassForm";
 import PendingRequests from "./pages/Admin-Dashboard/PendingRequests.jsx";
@@ -24,7 +27,10 @@ import UserManagement from "./pages/Admin-Dashboard/UserManagement.jsx";
 function App() {
   return (
     <>
+
+<AuthProvider>
       <Navbar />
+    
       <Routes>
         {/* Login Page */}
         <Route path="/" element={<Login />} />
@@ -45,7 +51,7 @@ function App() {
         <Route path="/Admin-dashboard" element={<AdminDashboard />} />
 
         {/* Admin1 dashboard*/}
-        <Route path="/Admin1-dashboard" element={<Admin1Dashboard />} />
+        <Route path="/faculty-admin-dashboard" element={<Admin1Dashboard />} />
 
         {/*Guard dashboard */}
         <Route path="/guard-dashboard" element={<GuardDashboard />} />
@@ -69,7 +75,13 @@ function App() {
         <Route path="/request-status/:id" element={<RequestStatus />} />
       </Routes>
 
+
+      {/* Footer */}
+
       <Footer />
+
+      </AuthProvider>
+
     </>
   );
 }

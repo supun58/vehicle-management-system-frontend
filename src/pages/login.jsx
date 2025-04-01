@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { GrFormView, GrFormViewHide } from "react-icons/gr";
@@ -7,6 +7,7 @@ import Alert from "../components/Alert";
 import bg1 from "../assets/bg1.jpg";
 import bg2 from "../assets/bg2.jpg";
 import bg3 from "../assets/bg3.jpg";
+import { useAuth } from "../controllers/authcontext";
 
 export default function Login() {
   const images = [bg1, bg2, bg3];
@@ -18,6 +19,8 @@ export default function Login() {
   const [alertTitle, setAlertTitle] = useState(""); // State for alert title
   const [alertMessage, setAlertMessage] = useState(""); // State for alert message
   const navigate = useNavigate();
+  const { login } = useAuth();
+
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -58,14 +61,21 @@ export default function Login() {
         axios.defaults.headers.common[
           "Authorization"
         ] = `Bearer ${response.data.token}`;
-        sessionStorage.setItem("token", response.data.token);
-        sessionStorage.setItem("role", response.data.role);
-        sessionStorage.setItem("full_name", response.data.full_name);
+
+              // Store token and user data via AuthContext
+      login(response.data.token, {
+        id: response.data._id,
+        full_name: response.data.full_name,
+        email: response.data.email,
+        role: response.data.role,
+        account_status: response.data.account_status,
+      });
+
 
         // Redirect based on user role
         if (response.data.role === "student") {
           navigate("/user-dashboard");
-        } else if (response.data.role === "lecturer") {
+        } else if (response.data.role === "lecturer" && response.data.account_status === "Confirmed") {
           navigate("/user-dashboard");
         } else if (response.data.role === "driver") {
           navigate("/driver-dashboard");
@@ -75,6 +85,9 @@ export default function Login() {
           navigate("/admin-dashboard");
         } else if (response.data.role === "guard") {
           navigate("/guard-dashboard");
+        }
+        else if (response.data.account_status === "Faculty Admin") {
+          navigate("/faculty-admin-dashboard");
         }
 
         setAlertTitle("Success");

@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import { ArrowLeft, Search, Edit, Trash2, UserCheck } from 'lucide-react';
+import React, { useState, useEffect, useContext } from 'react';
+import { ArrowLeft, Search, Edit, Trash2, UserCheck, UserPlus } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { AuthContext } from '../../controllers/authcontext.jsx';
 
 const UserManagement = () => {
   const navigate = useNavigate();
@@ -13,18 +14,48 @@ const UserManagement = () => {
   const [userToDelete, setUserToDelete] = useState(null);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [editingUser, setEditingUser] = useState(null);
+  const {token, initialized, logout } = useContext(AuthContext);
+
 
   useEffect(() => {
-    fetchUsers();
-  }, []);
+    if (initialized) {
+      fetchUsers();
+    }
+  }, [initialized, token]);
 
   const fetchUsers = async () => {
     try {
-      const res = await fetch('http://localhost:5000/api/auth/users');
-      const data = await res.json();
+      if (!token) {
+        console.error('No token available - redirecting to login');
+        logout();
+        navigate('/');
+        return;
+      }
+
+      const response = await fetch('http://localhost:5000/api/auth/users', {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
+      });
+
+      if (response.status === 401) {
+        logout();
+        navigate('/');
+        return;
+      }
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const data = await response.json();
       setUsers(data);
-    } catch (err) {
-      console.error('Failed to fetch users:', err);
+    } catch (error) {
+      console.error('Failed to fetch users:', error);
+      if (error.message.includes('Failed to fetch')) {
+        console.error('Network error - could not connect to server');
+      }
     }
   };
 
@@ -34,7 +65,7 @@ const UserManagement = () => {
     
     const matchesSearch = full_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          email.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesRole = filterRole === '' || user?.user_type?.toLowerCase() === filterRole.toLowerCase();
+    const matchesRole = filterRole === '' || user?.user_type?.toLowerCase() === filterRole.toLowerCase() || user?.account_status === filterRole;
     const matchesStatus = filterStatus === '' || user?.account_status === filterStatus;
     
     return matchesSearch && matchesRole && matchesStatus;
@@ -47,18 +78,40 @@ const UserManagement = () => {
     setSelectedUsers([]);
   };
 
-  const toggleUserStatus = async (userId, currentStatus) => {
+  const updateUserStatus = async (userId, newStatus) => {
     try {
-      const newStatus = currentStatus === 'Confirmed' ? 'Pending' : 'Confirmed';
       await fetch(`http://localhost:5000/api/auth/users/${userId}`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ account_status: newStatus })
       });
       fetchUsers();
-      setEditingUser(false); // Close edit mode after status change
+      setEditingUser(null);
     } catch (err) {
       console.error('Failed to update user status:', err);
+    }
+  };
+
+  const handleStatusChange = (userId, e) => {
+    const newStatus = e.target.value;
+    updateUserStatus(userId, newStatus);
+  };
+
+  const toggleUserStatus = async (userId, currentStatus) => {
+    const newStatus = currentStatus === 'Confirmed' ? 'Pending' : 'Confirmed';
+    await updateUserStatus(userId, newStatus);
+  };
+
+  const promoteToFacultyAdmin = async (userId) => {
+    try {
+      await fetch(`http://localhost:5000/api/auth/users/${userId}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ account_status: 'Faculty Admin' })
+      });
+      fetchUsers();
+    } catch (err) {
+      console.error('Failed to promote user:', err);
     }
   };
 
@@ -118,7 +171,7 @@ const UserManagement = () => {
               <option value="Student" className="bg-gray-700">Student</option>
               <option value="Lecturer" className="bg-gray-700">Lecturer</option>
               <option value="nonacademic" className="bg-gray-700">Non-Academic</option>
-              <option value="Limited Admin" className="bg-gray-700">Faculty Admins</option>
+              <option value="Faculty Admin" className="bg-gray-700">Faculty Admins</option>
             </select>
             <select 
               className="border border-white/30 rounded-lg px-4 py-2 bg-white/10 text-white focus:outline-none focus:ring-2 focus:ring-[#de9e28]"
@@ -166,7 +219,7 @@ const UserManagement = () => {
                       {editingUser === user._id ? (
                         <select
                           value={user.account_status}
-                          onChange={(e) => toggleUserStatus(user._id, e.target.value)}
+                          onChange={(e) => handleStatusChange(user._id, e)}
                           className="bg-gray-800 text-white rounded px-2 py-1"
                         >
                           <option value="Confirmed">Confirmed</option>
@@ -185,6 +238,7 @@ const UserManagement = () => {
                         <button 
                           className="text-blue-400 hover:text-blue-600 transition-colors"
                           onClick={() => setEditingUser(editingUser === user._id ? null : user._id)}
+                          title="Edit User Status"
                         >
                           <Edit className="w-5 h-5" />
                         </button>
@@ -192,13 +246,24 @@ const UserManagement = () => {
                           <button 
                             className="text-green-300 hover:text-green-400 transition-colors" 
                             onClick={() => toggleUserStatus(user._id, user.account_status)}
+                            title="Confirm User"
                           >
                             <UserCheck className="w-5 h-5" />
+                          </button>
+                        )}
+                        {user.user_type === 'lecturer' && user.account_status === 'Confirmed' && (
+                          <button 
+                            className="text-purple-300 hover:text-purple-400 transition-colors" 
+                            onClick={() => promoteToFacultyAdmin(user._id)}
+                            title="Promote to Faculty Admin"
+                          >
+                            <UserPlus className="w-5 h-5" />
                           </button>
                         )}
                         <button 
                           className="text-red-300 hover:text-red-400 transition-colors" 
                           onClick={() => confirmDelete(user)}
+                          title="Delete User"
                         >
                           <Trash2 className="w-5 h-5" />
                         </button>

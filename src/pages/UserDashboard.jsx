@@ -7,6 +7,13 @@ function Dashboard() {
       {/* Main Content */}
       <main className="pt-16">
         <div className="container mx-auto px-4 py-8">
+
+          {/* Header Section */}
+          <div className="mb-8 text-center">
+            <h1 className="text-3xl font-bold text-white mb-2">User Dashboard</h1>
+            <p className="text-ash-200">Manage your transportation system efficiently</p>
+          </div>
+
           {/* Cards */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-8 mb-8">
             {/* Request Vehicle Card */}

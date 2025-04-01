@@ -10,6 +10,9 @@ import {
 } from 'lucide-react';
 import axios from 'axios';
 import { ClipLoader } from 'react-spinners';
+import { useAuth } from '../../controllers/authcontext';
+import { useContext } from 'react';
+import { AuthContext } from '../../controllers/authcontext';
 
 import RequestDetails from './RequestDetails';
 
@@ -22,6 +25,7 @@ function PendingRequests() {
   const [newStatus, setNewStatus] = useState('');
   const [showRequestDetails, setShowRequestDetails] = useState(false);
   const [request, setRequest] = useState(null);
+  const { token, logout } = useAuth();
 
   // Loading states
   const [isApproveLoading, setIsApproveLoading] = useState(false);
@@ -36,9 +40,9 @@ function PendingRequests() {
   useEffect(() => {
     const fetchPendingRequests = async () => {
       try {
-        const token = sessionStorage.getItem('token');
         if (!token) {
-          console.error("No token found");
+          console.error("No token available");
+          logout(); // Use the logout function from context
           return;
         }
   
@@ -82,9 +86,9 @@ function PendingRequests() {
   const handleApprove = async (request) => {
     setIsApproveLoading(true);
     try {
-      const token = sessionStorage.getItem('token');
       if (!token) {
-        console.error("No token found");
+        console.error("No token available");
+        logout(); // Use the logout function from context
         return;
       }
   
@@ -138,9 +142,9 @@ function PendingRequests() {
   
     setIsRejectLoading(true);
     try {
-      const token = sessionStorage.getItem('token');
       if (!token) {
-        console.error("No token found");
+        console.error("No token available");
+        logout(); // Use the logout function from context
         return;
       }
   
@@ -200,9 +204,9 @@ function PendingRequests() {
   
     setIsDeleteLoading(true);
     try {
-      const token = sessionStorage.getItem('token');
       if (!token) {
-        console.error("No token found");
+        console.error("No token available");
+        logout(); // Use the logout function from context
         return;
       }
   
@@ -283,9 +287,9 @@ function PendingRequests() {
 
     setIsEditLoading(true);
     try {
-      const token = sessionStorage.getItem('token');
       if (!token) {
-        console.error("No token found");
+        console.error("No token available");
+        logout(); // Use the logout function from context
         return;
       }
   
