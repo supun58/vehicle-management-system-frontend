@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-
+import Alert from "./components/Alert";
 function AddVehicleForm() {
   const [formData, setFormData] = useState({
     make: "",
@@ -13,7 +13,11 @@ function AddVehicleForm() {
     mileage: "",
     status: "available",
   });
-
+  const [alert, setAlert] = useState({
+    visible: false,
+    title: "",
+    message: "",
+  });
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -23,15 +27,6 @@ function AddVehicleForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const vehicleExists = vehicles.some(
-      (vehicle) => vehicle.registrationNumber === formData.registrationNumber
-    );
-    if (vehicleExists) {
-      setError(
-        "A vehicle with this registration number has already been added."
-      );
-      return;
-    }
 
     try {
       // Replace with your backend API endpoint
@@ -39,7 +34,12 @@ function AddVehicleForm() {
         "http://localhost:5000/api/auth/add-vehicle",
         formData
       );
-      alert(response.data.message);
+      setAlert({
+        visible: true,
+        title: "Success",
+        message: response.data.message,
+      });
+
       // Clear form after successful submission (optional)
       setFormData({
         make: "",
@@ -57,12 +57,26 @@ function AddVehicleForm() {
         "Error adding vehicle:",
         error.response?.data || error.message
       );
-      alert("Error: " + (error.response?.data?.message || error.message));
+      setAlert({
+        visible: true,
+        title: "Error",
+        message: `Registration failed: ${errorMessage}`,
+      });
     }
   };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100 p-6">
+      {alert.visible && (
+        <Alert
+          title={alert.title}
+          message={alert.message}
+          setAlertVisible={(visible) =>
+            setAlert((prev) => ({ ...prev, visible }))
+          }
+        />
+      )}
+
       <div className="bg-white shadow-lg rounded-lg p-8 w-full max-w-lg border border-gray-300">
         <h2 className="text-3xl font-bold text-maroon-700 mb-6 text-center">
           Add Vehicle

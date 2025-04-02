@@ -24,64 +24,67 @@ import RequestDetails from "./pages/Admin-Dashboard/RequestDetails.jsx";
 import RequestStatus from "./pages/Admin-Dashboard/RequestStatus.jsx";
 import UserManagement from "./pages/Admin-Dashboard/UserManagement.jsx";
 
+import AddVehicleForm from "./AddVehicleForm.jsx"; // Import the AddVehicleForm component
+
 function App() {
   return (
     <>
+      <AuthProvider>
+        <Navbar />
 
-<AuthProvider>
-      <Navbar />
-    
-      <Routes>
-        {/* Login Page */}
-        <Route path="/" element={<Login />} />
+        <Routes>
+          {/* Login Page */}
+          <Route path="/" element={<Login />} />
 
-        {/*Registration Page */}
-        <Route path="/register" element={<Registration />} />
+          {/*Registration Page */}
+          <Route path="/register" element={<Registration />} />
 
-        {/* User Dashboard */}
-        <Route path="/user-dashboard" element={<UserDashboard />} />
+          {/* User Dashboard */}
+          <Route path="/user-dashboard" element={<UserDashboard />} />
 
-        {/* Vehicle Request Form */}
-        <Route path="/request-vehicle" element={<VehicleRequestForm />} />
+          {/* Vehicle Request Form */}
+          <Route path="/request-vehicle" element={<VehicleRequestForm />} />
 
-        {/* Driver dashboard*/}
-        <Route path="/driver-dashboard" element={<DriverDashboard />} />
+          {/* Driver dashboard*/}
+          <Route path="/driver-dashboard" element={<DriverDashboard />} />
 
-        {/* Admin dashboard*/}
-        <Route path="/Admin-dashboard" element={<AdminDashboard />} />
+          {/* Admin dashboard*/}
+          <Route path="/Admin-dashboard" element={<AdminDashboard />} />
+          {/* Add vehicle*/}
+          <Route path="/add-vehicle" element={<AddVehicleForm />} />
 
-        {/* Admin1 dashboard*/}
-        <Route path="/faculty-admin-dashboard" element={<Admin1Dashboard />} />
+          {/* Admin1 dashboard*/}
+          <Route
+            path="/faculty-admin-dashboard"
+            element={<Admin1Dashboard />}
+          />
 
-        {/*Guard dashboard */}
-        <Route path="/guard-dashboard" element={<GuardDashboard />} />
+          {/*Guard dashboard */}
+          <Route path="/guard-dashboard" element={<GuardDashboard />} />
 
-        {/* About Us*/}
-        <Route path="/about-us" element={<AboutUs />} />
+          {/* About Us*/}
+          <Route path="/about-us" element={<AboutUs />} />
 
-        {/* Visitor Form */}
-        <Route path="/visitor" element={<VisitorForm />} />
+          {/* Visitor Form */}
+          <Route path="/visitor" element={<VisitorForm />} />
 
-        {/*pending requests */}
-        <Route path="/pending-requests" element={<PendingRequests />} />
+          {/*pending requests */}
+          <Route path="/pending-requests" element={<PendingRequests />} />
 
-        {/* User Management */}
-        <Route path="/user-management" element={<UserManagement />} />
+          {/* User Management */}
+          <Route path="/user-management" element={<UserManagement />} />
 
-        {/* Request Details */}
-        <Route path="/request-details/:id" element={<RequestDetails />} />
+          {/* Request Details */}
+          <Route path="/request-details/:id" element={<RequestDetails />} />
 
-        {/* Request Status */}
-        <Route path="/request-status/:id" element={<RequestStatus />} />
-      </Routes>
+          {/* Request Status */}
+          <Route path="/request-status/:id" element={<RequestStatus />} />
+        </Routes>
 
+        {/* Footer */}
 
-      {/* Footer */}
-
-      <Footer />
-
+        <Footer />
       </AuthProvider>
-
     </>
   );
 }
