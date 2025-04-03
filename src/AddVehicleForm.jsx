@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import Alert from "./components/Alert";
+
 function AddVehicleForm() {
   const [formData, setFormData] = useState({
     make: "",
@@ -12,27 +13,55 @@ function AddVehicleForm() {
     capacity: "",
     mileage: "",
     status: "available",
+    imageurl: null,
   });
+
   const [alert, setAlert] = useState({
     visible: false,
     title: "",
     message: "",
   });
+
   const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
+    const { name, value, files } = e.target;
+    if (name === "imageurl") {
+      setFormData({
+        ...formData,
+        [name]: files[0], // Store the file itself
+      });
+    } else {
+      setFormData({
+        ...formData,
+        [name]: value,
+      });
+    }
   };
+
+  const errorMessage = " Please try again.";
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // Create FormData object
+    const formDataToSend = new FormData();
+
+    // Append the form data fields
+    for (const key in formData) {
+      if (formData[key]) {
+        formDataToSend.append(key, formData[key]);
+      }
+    }
 
     try {
       // Replace with your backend API endpoint
       const response = await axios.post(
         "http://localhost:5000/api/auth/add-vehicle",
-        formData
+        formDataToSend,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data", // Set the header for form data
+          },
+        }
       );
       setAlert({
         visible: true,
@@ -51,6 +80,7 @@ function AddVehicleForm() {
         capacity: "",
         mileage: "",
         status: "available",
+        imageurl: null,
       });
     } catch (error) {
       console.error(
@@ -77,7 +107,7 @@ function AddVehicleForm() {
         />
       )}
 
-      <div className="bg-white shadow-lg rounded-lg p-8 w-full max-w-lg border border-gray-300 mt-14">
+      <div className="bg-white shadow-lg rounded-lg p-8 w-full max-w-lg border border-gray-300">
         <h2 className="text-3xl font-bold text-maroon-700 mb-6 text-center">
           Add Vehicle
         </h2>
@@ -204,6 +234,21 @@ function AddVehicleForm() {
               <option value="unavailable">Unavailable</option>
             </select>
           </div>
+          {/* Image Upload */}
+          <div className="mt-4">
+            <label className="block text-gray-700 font-bold">
+              Vehicle Image
+            </label>
+            <input
+              type="file"
+              name="imageurl"
+              accept="image/*"
+              onChange={handleChange}
+              className="p-2 border border-gray-500 rounded w-full text-white"
+              required
+            />
+          </div>
+
           {/* Submit Button */}
           <button
             type="submit"
