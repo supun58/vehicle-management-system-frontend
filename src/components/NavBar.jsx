@@ -30,12 +30,14 @@ const fullName = userData ? JSON.parse(userData).full_name : '';
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16 items-center">
           {/* Logo and Title */}
-          <div className="flex items-center">
+          <a href="/" className="flex items-center">
+          <div className="flex items-center ml-8">
             <Car className="h-8 w-8 text-ash-200" />
             <span className="ml-2 text-xl font-bold text-ash-100">
               UniTransit
             </span>
           </div>
+          </a>
 
           {/* Conditional Rendering */}
           <div className="flex items-center space-x-4">

@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { FaUser, FaEnvelope, FaPhone, FaLock, FaIdCard } from 'react-icons/fa';
+import React, { useState, useEffect } from 'react';
+import { FaUser, FaEnvelope, FaPhone, FaLock, FaIdCard, FaCar } from 'react-icons/fa';
 import axios from 'axios';
 import Alert from '../components/Alert';
 
@@ -22,6 +22,20 @@ const Registration = () => {
     licenseNumber: '',
     vehicleAssigned: '',
   });
+  const [vehicles, setVehicles] = useState([]);
+
+
+  const faculties = [
+    "Science",
+    "Humanities & Social Sciences",
+    "Management",
+    "Fisheries",
+    "Medicine",
+    "Engineering"
+  ];
+  
+  const levels = ["1", "2", "3", "4"];
+
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [alert, setAlert] = useState({ visible: false, title: '', message: '' });
@@ -221,6 +235,53 @@ const Registration = () => {
     }
   };
 
+
+// Fetch vehicles from backend
+useEffect(() => {
+  const fetchVehicles = async () => {
+    try {
+      const response = await fetch('http://localhost:5000/api/auth/getvehicles'); // Replace with your API endpoint
+      const data = await response.json();
+      setVehicles(data);
+    } catch (error) {
+      console.error('Error fetching vehicles:', error);
+    }
+  };
+
+  if (formData.role === 'driver') {
+    fetchVehicles();
+  }
+}, [formData.role]);
+
+// Create a renderDropdown function
+const renderDropdown = (name, label, icon, options) => (
+  <div className="form-group">
+    <label htmlFor={name}>{label}</label>
+    <div className="input-group">
+      {icon && (
+        <div className="input-group-prepend">
+          <span className="input-group-text">{icon}</span>
+        </div>
+      )}
+      <select
+        className="form-control"
+        id={name}
+        name={name}
+        value={formData[name] || ''}
+        onChange={handleChange}
+      >
+        <option value="">Select a vehicle</option>
+        {options.map((vehicle) => (
+          <option key={vehicle.id} value={vehicle.id}>
+            {vehicle.make} {vehicle.model} {vehicle.registrationNumber}
+          </option>
+        ))}
+      </select>
+    </div>
+  </div>
+);
+
+
   const renderInput = (name, label, type = 'text', icon = null) => (
     <div style={styles.formGroup}>
       <label style={styles.label}>
@@ -282,20 +343,71 @@ const Registration = () => {
           </>
         ) : (
           <>
-            {formData.role === 'student' && (
-              <>
-                {renderInput('studentId', 'Student ID', 'text', <FaIdCard />)}
-                {renderInput('faculty', 'Faculty')}
-                {renderInput('level', 'Level')}
-              </>
-            )}
+{formData.role === 'student' && (
+  <>
+    {renderInput('studentId', 'Student ID', 'text', <FaIdCard />)}
+    <div className="mb-4">
+      <label htmlFor="faculty" className="block text-sm font-medium text-gray-700">
+        Faculty *
+      </label>
+      <select
+        id="faculty"
+        name="faculty"
+        value={formData.faculty}
+        onChange={handleChange}
+        className="w-full p-2 mt-1 rounded-lg border border-gray-300 focus:outline-none focus:ring focus:ring-blue-300"
+        required
+      >
+        <option value="" disabled>Select Faculty</option>
+        {faculties.map(faculty => (
+          <option key={faculty} value={faculty}>{faculty}</option>
+        ))}
+      </select>
+    </div>
+    <div className="mb-4">
+      <label htmlFor="level" className="block text-sm font-medium text-gray-700">
+        Level *
+      </label>
+      <select
+        id="level"
+        name="level"
+        value={formData.level}
+        onChange={handleChange}
+        className="w-full p-2 mt-1 rounded-lg border border-gray-300 focus:outline-none focus:ring focus:ring-blue-300"
+        required
+      >
+        <option value="" disabled>Select Level</option>
+        {levels.map(level => (
+          <option key={level} value={level}>{level}</option>
+        ))}
+      </select>
+    </div>
+  </>
+)}
 
-            {formData.role === 'lecturer' && (
-              <>
-                {renderInput('staffId', 'Staff ID', 'text', <FaIdCard />)}
-                {renderInput('department', 'Department')}
-              </>
-            )}
+{formData.role === 'lecturer' && (
+  <>
+    {renderInput('staffId', 'Staff ID', 'text', <FaIdCard />)}
+    <div className="mb-4">
+      <label htmlFor="faculty" className="block text-sm font-medium text-gray-700">
+        Faculty *
+      </label>
+      <select
+        id="faculty"
+        name="faculty"
+        value={formData.faculty}
+        onChange={handleChange}
+        className="w-full p-2 mt-1 rounded-lg border border-gray-300 focus:outline-none focus:ring focus:ring-blue-300"
+        required
+      >
+        <option value="" disabled>Select Faculty</option>
+        {faculties.map(faculty => (
+          <option key={faculty} value={faculty}>{faculty}</option>
+        ))}
+      </select>
+    </div>
+  </>
+)}
 
             {formData.role === 'nonAcademic' && (
               <>
@@ -304,12 +416,17 @@ const Registration = () => {
               </>
             )}
 
-            {formData.role === 'driver' && (
-              <>
-                {renderInput('licenseNumber', 'License Number', 'text', <FaIdCard />)}
-                {renderInput('vehicleAssigned', 'Vehicle Assigned (Optional)')}
-              </>
-            )}
+{formData.role === 'driver' && (
+  <>
+    {renderInput('licenseNumber', 'License Number', 'text', <FaIdCard />)}
+    {renderDropdown(
+      'vehicleAssigned', 
+      'Vehicle Assigned (Optional)', 
+      <FaCar />,
+      vehicles
+    )}
+  </>
+)}
 
 {formData.role === 'guard' && (
               <>

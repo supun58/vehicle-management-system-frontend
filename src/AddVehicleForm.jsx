@@ -77,7 +77,7 @@ function AddVehicleForm() {
         />
       )}
 
-      <div className="bg-white shadow-lg rounded-lg p-8 w-full max-w-lg border border-gray-300">
+      <div className="bg-white shadow-lg rounded-lg p-8 w-full max-w-lg border border-gray-300 mt-14">
         <h2 className="text-3xl font-bold text-maroon-700 mb-6 text-center">
           Add Vehicle
         </h2>
