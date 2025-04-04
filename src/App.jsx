@@ -23,7 +23,7 @@ import GuardDashboard from "./pages/GuardDashboard.jsx";
 import RequestDetails from "./pages/Admin-Dashboard/RequestDetails.jsx";
 import UserManagement from "./pages/Admin-Dashboard/UserManagement.jsx";
 import RequestStatus from "./pages/Admin-Dashboard/RequestStatus.jsx";
-import AddVehicleForm from "./AddVehicleForm.jsx"; // Import the AddVehicleForm component
+import AddVehicleForm from "./AddVehicleForm.jsx";
 
 function App() {
   return (

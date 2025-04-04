@@ -13,7 +13,7 @@ function AddVehicleForm() {
     capacity: "",
     mileage: "",
     status: "available",
-    imageurl: null,
+    imageUrl: null,
   });
 
   const [alert, setAlert] = useState({
@@ -24,7 +24,7 @@ function AddVehicleForm() {
 
   const handleChange = (e) => {
     const { name, value, files } = e.target;
-    if (name === "imageurl") {
+    if (name === "imageUrl") {
       setFormData({
         ...formData,
         [name]: files[0], // Store the file itself
@@ -80,7 +80,7 @@ function AddVehicleForm() {
         capacity: "",
         mileage: "",
         status: "available",
-        imageurl: null,
+        imageUrl: null,
       });
     } catch (error) {
       console.error(
@@ -241,7 +241,7 @@ function AddVehicleForm() {
             </label>
             <input
               type="file"
-              name="imageurl"
+              name="imageUrl"
               accept="image/*"
               onChange={handleChange}
               className="p-2 border border-gray-500 rounded w-full text-white"

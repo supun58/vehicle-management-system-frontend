@@ -55,9 +55,11 @@ function AdminDashboard() {
               <p className="text-ash-600 mb-3 text-sm">
                 View, edit, or remove vehicles from the system.
               </p>
-              <button className="w-full bg-maroon-700 text-white px-4 py-2 rounded-md hover:bg-maroon-600 transition duration-300 text-xs">
-                Manage Vehicles
-              </button>
+              <a href="/vehicle-management">
+                <button className="w-full bg-maroon-700 text-white px-4 py-2 rounded-md hover:bg-maroon-600 transition duration-300 text-xs">
+                  Manage Vehicles
+                </button>
+              </a>
             </div>
 
             {/* Ongoing Trips */}
