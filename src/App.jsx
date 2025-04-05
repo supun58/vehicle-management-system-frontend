@@ -24,6 +24,8 @@ import RequestDetails from "./pages/Admin-Dashboard/RequestDetails.jsx";
 import UserManagement from "./pages/Admin-Dashboard/UserManagement.jsx";
 import RequestStatus from "./pages/Admin-Dashboard/RequestStatus.jsx";
 import AddVehicleForm from "./AddVehicleForm.jsx";
+import VehicleManagement from "./pages/Admin-Dashboard/VehicleManagement.jsx";
+import NavigateVehicle from "./pages/Admin-Dashboard/NavigateVehicle.jsx";
 
 function App() {
   return (
@@ -72,6 +74,15 @@ function App() {
 
           {/* User Management */}
           <Route path="/user-management" element={<UserManagement />} />
+
+          {/* Vehicle Management */}
+          <Route path="/vehicle-management" element={<VehicleManagement />} />
+
+          {/* Vehicle Navigation */}
+          <Route
+            path="/navigate-vehicle/:regNumber"
+            element={<NavigateVehicle />}
+          />
 
           {/* Request Details */}
           <Route path="/request-details/:id" element={<RequestDetails />} />
