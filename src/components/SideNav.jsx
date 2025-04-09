@@ -17,10 +17,10 @@ export default function SideNav() {
   const navItems = [
     { icon: <Home size={20} />, label: "Home", href: "/" },
     { icon: <LogIn size={20} />, label: "Login", href: "/login" },
-    { icon: <Info size={20} />, label: "About", href: "/about" },
+    { icon: <Info size={20} />, label: "About", href: "/about-us" },
     { icon: <Truck size={20} />, label: "Driver", href: "/driver-dashboard" },
     { icon: <Users size={20} />, label: "User", href: "/user-dashboard" },
-    { icon: <Shield size={20} />, label: "Guard", href: "/guard" },
+    { icon: <Shield size={20} />, label: "Guard", href: "/guard-dashboard" },
     {
       icon: <LayoutDashboard size={20} />,
       label: "Dashboard",
@@ -40,7 +40,7 @@ export default function SideNav() {
 
       {/* Navbar */}
       {isNavVisible && (
-        <div className="fixed left-0 top-0 h-screen w-64 bg-maroon-800 text-ash-100 p-4 shadow-xl z-40">
+        <div className="fixed left-0 top-0 h-screen w-64 bg-maroon-800 text-ash-100 p-4 shadow-5xl z-40">
           <div className="mb-8 px-4">
             <h1 className="text-2xl font-bold">
               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;UniTransit

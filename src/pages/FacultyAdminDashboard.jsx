@@ -44,9 +44,11 @@ function Admin1Dashboard() {
                 <p className="text-ash-600 mb-4 text-sm">
                   Review and approve pending transportation requests.
                 </p>
+                <a href="/pending-requests" className="block w-full">
                 <button className="w-full bg-maroon-700 text-white px-4 py-2 rounded-md hover:bg-maroon-600 transition duration-300">
                   Manage Requests
                 </button>
+                </a>
               </div>
 
               {/* Messages Card */}

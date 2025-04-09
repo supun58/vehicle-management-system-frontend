@@ -31,7 +31,7 @@ const fullName = userData ? JSON.parse(userData).full_name : '';
         <div className="flex justify-between h-16 items-center">
           {/* Logo and Title */}
           <a href="/" className="flex items-center">
-          <div className="flex items-center ml-8">
+          <div className="flex items-center">
             <Car className="h-8 w-8 text-ash-200" />
             <span className="ml-2 text-xl font-bold text-ash-100">
               UniTransit
@@ -47,9 +47,9 @@ const fullName = userData ? JSON.parse(userData).full_name : '';
             )}
 
             {/* Show Visitor Link on Login/Register Pages */}
-            {!isAuthenticated && (location.pathname === "/" || location.pathname === "/register") && (
+            { (location.pathname === "/" || location.pathname === "/register") && (
               <span className="text-white">
-                Are you a visitor?&nbsp;
+                Are you a visitor?&nbsp;&nbsp;
                 <button
                   className="bg-[#de9e28] text-white px-4 py-2 rounded-md hover:bg-gray-600 transition duration-300"
                   onClick={() => navigate("/visitor")}

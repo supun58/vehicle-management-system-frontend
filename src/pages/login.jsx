@@ -64,13 +64,12 @@ export default function Login() {
 
               // Store token and user data via AuthContext
       login(response.data.token, {
-        id: response.data._id,
+        _id: response.data._id,
         full_name: response.data.full_name,
         email: response.data.email,
         role: response.data.role,
         account_status: response.data.account_status,
       });
-
 
         // Redirect based on user role
         if (response.data.role === "student") {

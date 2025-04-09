@@ -5,12 +5,13 @@ import Alert from "../components/Alert";
 import { X } from "lucide-react";
 
 export default function VehicleRequestForm() {
-  const { token } = useAuth();
+  const { token,logout } = useAuth();
   const navigate = useNavigate();
 
   const userData = localStorage.getItem('userData');
   const full_name = userData ? JSON.parse(userData).full_name : '';
   const role = userData ? JSON.parse(userData).role : '';
+  const email = userData ? JSON.parse(userData).email : '';
 
   // Form state
   const [formData, setFormData] = useState({
@@ -122,11 +123,13 @@ export default function VehicleRequestForm() {
 
       const formPayload = new FormData();
       formPayload.append('full_name', full_name);
+      formPayload.append('email', email);
       formPayload.append('role', role);
       formPayload.append("contact", formData.contact);
       formPayload.append("vehicleType", formData.vehicleType);
       formPayload.append("purpose", formData.purpose);
       formPayload.append("date", formData.date);
+      formPayload.append("Time", formData.time);
       formPayload.append("from", from);
       formPayload.append("to", to);
       formPayload.append("distance", distance);
@@ -134,7 +137,6 @@ export default function VehicleRequestForm() {
       if (formData.supporting_documents) {
         formPayload.append("supporting_documents", formData.supporting_documents);
       }
-
       const response = await fetch("http://localhost:5000/api/auth/request-vehicle", {
         method: "POST",
         headers: {
@@ -146,7 +148,8 @@ export default function VehicleRequestForm() {
       const responseData = await response.json();
 
       if (!response.ok) {
-        throw new Error(responseData.message || "Failed to submit request!");
+        throw new Error(responseData.error || "Failed to submit request!");
+        
       }
 
       showAlert("Success", "Request submitted successfully!");
@@ -154,6 +157,7 @@ export default function VehicleRequestForm() {
       
     } catch (error) {
       console.error("Submission error:", error);
+      logout();
       showAlert("Error", error.message || "Failed to submit request. Please try again.", true);
     } finally {
       setIsSubmitting(false);
@@ -265,6 +269,23 @@ export default function VehicleRequestForm() {
                 required
               />
               {errors.date && <p className="mt-1 text-sm text-red-600">{errors.date}</p>}
+            </div>
+
+            {/*Time*/}
+            <div>
+              <label htmlFor="time" className="block text-sm font-medium text-gray-700">
+                Time *
+              </label>
+              <input
+                type="time"
+                id="time"
+                name="time"
+                value={formData.time}
+                onChange={handleChange}
+                className={`w-full p-2 mt-1 rounded-lg border ${errors.time ? "border-red-500" : "border-gray-300"} focus:outline-none focus:ring focus:ring-blue-300`}
+                required
+              />
+              {errors.time && <p className="mt-1 text-sm text-red-600">{errors.time}</p>}
             </div>
 
             {/* Starting Point */}
