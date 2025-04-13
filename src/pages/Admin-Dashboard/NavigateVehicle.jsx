@@ -27,9 +27,9 @@ const NavigateVehicle = () => {
   };
 
   return vehicle ? (
-    <div className="p-6 max-w-2xl mx-auto bg-white rounded-2xl shadow-md mt-6">
+    <div className="p-6 max-w-2xl mx-auto bg-white rounded-2xl shadow-md mt-24">
       <img
-        className="mb-4 w-full h-60 object-cover rounded-xl"
+        className=" mb-4 w-full h-60 object-cover rounded-xl"
         src={
           vehicle.imageUrl
             ? `data:${vehicle.contentType};base64,${vehicle.imageUrl}`

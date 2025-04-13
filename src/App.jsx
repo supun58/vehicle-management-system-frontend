@@ -26,7 +26,9 @@ import RequestStatus from "./pages/Admin-Dashboard/RequestStatus.jsx";
 import AddVehicleForm from "./AddVehicleForm.jsx";
 import VehicleManagement from "./pages/Admin-Dashboard/VehicleManagement.jsx";
 import NavigateVehicle from "./pages/Admin-Dashboard/NavigateVehicle.jsx";
-
+import SendMessage from "./pages/Admin-Dashboard/SendMessage.jsx";
+import EmergencyReport from "./pages/EmergencyReport.jsx";
+import EmergencyHandle from "./pages/Admin-Dashboard/EmergencyHandle.jsx";
 function App() {
   return (
     <>
@@ -78,6 +80,9 @@ function App() {
           {/* Vehicle Management */}
           <Route path="/vehicle-management" element={<VehicleManagement />} />
 
+          {/* Send Message */}
+          <Route path="send-message" element={<SendMessage />} />
+
           {/* Vehicle Navigation */}
           <Route
             path="/navigate-vehicle/:regNumber"
@@ -89,6 +94,12 @@ function App() {
 
           {/* Request Status */}
           <Route path="/request-status/:id" element={<RequestStatus />} />
+
+          {/* emergency report*/}
+          <Route path="/emergency-report" element={<EmergencyReport />} />
+
+          {/* emergency handle*/}
+          <Route path="/emergency-handle" element={<EmergencyHandle />} />
         </Routes>
 
         {/* Footer */}

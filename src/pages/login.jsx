@@ -21,7 +21,6 @@ export default function Login() {
   const navigate = useNavigate();
   const { login } = useAuth();
 
-
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentImage((prevImage) => (prevImage + 10) % images.length);
@@ -62,19 +61,22 @@ export default function Login() {
           "Authorization"
         ] = `Bearer ${response.data.token}`;
 
-              // Store token and user data via AuthContext
-      login(response.data.token, {
-        _id: response.data._id,
-        full_name: response.data.full_name,
-        email: response.data.email,
-        role: response.data.role,
-        account_status: response.data.account_status,
-      });
+        // Store token and user data via AuthContext
+        login(response.data.token, {
+          _id: response.data._id,
+          full_name: response.data.full_name,
+          email: response.data.email,
+          role: response.data.role,
+          account_status: response.data.account_status,
+        });
 
         // Redirect based on user role
         if (response.data.role === "student") {
           navigate("/user-dashboard");
-        } else if (response.data.role === "lecturer" && response.data.account_status === "Confirmed") {
+        } else if (
+          response.data.role === "lecturer" &&
+          response.data.account_status === "Confirmed"
+        ) {
           navigate("/user-dashboard");
         } else if (response.data.role === "driver") {
           navigate("/driver-dashboard");
@@ -84,11 +86,10 @@ export default function Login() {
           navigate("/admin-dashboard");
         } else if (response.data.role === "guard") {
           navigate("/guard-dashboard");
-        }
-        else if (response.data.account_status === "Faculty Admin") {
+        } else if (response.data.account_status === "Faculty Admin") {
           navigate("/faculty-admin-dashboard");
         }
-
+        localStorage.setItem("driverId", response.data._id);
         setAlertTitle("Success");
         setAlertMessage("Login successful!");
         setAlertVisible(true);
@@ -96,9 +97,7 @@ export default function Login() {
       .catch((error) => {
         if (error.response) {
           setAlertTitle("Login Failed");
-          setAlertMessage(
-            error.response.data.error
-          );
+          setAlertMessage(error.response.data.error);
         } else {
           setAlertTitle("Error");
           setAlertMessage("An error occurred. Please try again.");
@@ -115,60 +114,65 @@ export default function Login() {
     setPassword(e.target.value);
   };
 
-
-
   return (
     <div className="min-h-screen flex flex-col lg:flex-row">
       {/* Left Section - Enhanced with smooth transitions */}
       <div className="hidden md:flex md:w-2/3 lg:w-3/5 flex-col items-center justify-center p-12 relative overflow-hidden">
         {/* Blurred Background with Smooth Transition */}
-        <div 
+        <div
           className="absolute inset-0 bg-cover bg-center blur-[2px] scale-105 transition-all duration-1000 ease-[cubic-bezier(0.45,0.05,0.55,0.95)]"
           style={{
             backgroundImage: `url(${images[currentImage]})`,
-            transitionProperty: 'filter, transform', // Explicitly specify properties
-            willChange: 'filter, transform' // Optimize for animation
+            transitionProperty: "filter, transform", // Explicitly specify properties
+            willChange: "filter, transform", // Optimize for animation
           }}
         ></div>
-        
+
         {/* Gradient Overlay with Smooth Opacity Transition */}
         <div className="absolute inset-0 bg-gradient-to-br from-maroon-900/40 via-ash-900/30 to-ash-800/20 transition-opacity duration-1000 ease-in-out"></div>
-        
+
         {/* Text Container with Subtle Entrance Animation */}
-        <div className="relative z-10 text-center p-8 transition-all duration-700 ease-out delay-100"
-             style={{
-               animation: 'fadeInUp 700ms ease-out both',
-               willChange: 'opacity, transform'
-             }}>
+        <div
+          className="relative z-10 text-center p-8 transition-all duration-700 ease-out delay-100"
+          style={{
+            animation: "fadeInUp 700ms ease-out both",
+            willChange: "opacity, transform",
+          }}
+        >
           {/* Icon with Gentle Pulse Animation */}
-          <div className="h-20 w-20 mx-auto mb-6 drop-shadow-[0_2px_4px_rgba(0,0,0,0.5)] 
-                        animate-[pulse_6s_ease-in-out_infinite]">
+          <div
+            className="h-20 w-20 mx-auto mb-6 drop-shadow-[0_2px_4px_rgba(0,0,0,0.5)] 
+                        animate-[pulse_6s_ease-in-out_infinite]"
+          >
             <Car className="h-full w-full text-white transition-colors duration-500" />
           </div>
-          
-          {/* Heading with Text Shadow Transition */}
-          <h1 className="text-3xl font-bold text-white mb-4 
-                         drop-shadow-[0_2px_8px_rgba(0,0,0,0.7)]
-                         transition-all duration-500 hover:drop-shadow-[0_4px_12px_rgba(0,0,0,0.9)]">
-                  University of Ruhuna Vehicle Management System
 
+          {/* Heading with Text Shadow Transition */}
+          <h1
+            className="text-3xl font-bold text-white mb-4 
+                         drop-shadow-[0_2px_8px_rgba(0,0,0,0.7)]
+                         transition-all duration-500 hover:drop-shadow-[0_4px_12px_rgba(0,0,0,0.9)]"
+          >
+            University of Ruhuna Vehicle Management System
           </h1>
-          
+
           {/* Paragraph with Delayed Fade-in */}
-          <p className="text-0.5xl text-ash-100 font-bold max-w-md mx-auto leading-relaxed
+          <p
+            className="text-0.5xl text-ash-100 font-bold max-w-md mx-auto leading-relaxed
                         drop-shadow-[0_1px_4px_rgba(0,0,0,0.5)]
-                        transition-opacity duration-700 delay-200">
+                        transition-opacity duration-700 delay-200"
+          >
             Streamlining University Operations: Efficiently Manage Resources,
             Events, and Student Services
           </p>
         </div>
       </div>
-  
+
       {/* Right Section - Now takes less space on larger screens */}
       <div className="w-full md:w-1/3 lg:w-2/5 bg-gradient-to-br from-maroon-700 via-ash-700 to-ash-500 flex items-center justify-center p-8">
         <div className="bg-white/90 backdrop-blur-sm shadow-2xl rounded-xl p-8 max-w-md w-full">
           <h2 className="text-2xl font-bold text-maroon-700 mb-6">Login</h2>
-  
+
           {/* Show Alert when visible */}
           {alertVisible && (
             <Alert
@@ -177,7 +181,7 @@ export default function Login() {
               setAlertVisible={setAlertVisible}
             />
           )}
-  
+
           <form className="space-y-4">
             <div>
               <label
