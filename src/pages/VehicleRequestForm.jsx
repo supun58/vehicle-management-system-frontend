@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../controllers/authcontext";
 import Alert from "../components/Alert";
 import { X } from "lucide-react";
+import LocationPickerModal from "../controllers/LocationPickerModal";
+
 
 export default function VehicleRequestForm() {
   const { token,logout } = useAuth();
@@ -19,7 +21,9 @@ export default function VehicleRequestForm() {
     contact: "",
     vehicleType: "",
     purpose: "",
+    textfrom: "",
     from: "",
+    textto: "",
     to: "",
     distance: "",
     date: "",
@@ -34,6 +38,18 @@ export default function VehicleRequestForm() {
   const [showCustomTo, setShowCustomTo] = useState(false);
   const [customFrom, setCustomFrom] = useState("");
   const [customTo, setCustomTo] = useState("");
+  const [showModal, setShowModal] = useState(false);
+  const [showLocationModal, setShowLocationModal] = useState(false);
+  const [textfrom, setTextFrom] = useState(""); // State for 'textfrom'
+  const [textto, setTextTo] = useState(""); // State for 'textto'
+const [selectedStartLocation, setSelectedStartLocation] = useState(null);
+const [selectedDestinationLocation, setSelectedDestinationLocation] = useState(null);
+const [isSelecting, setIsSelecting] = useState(""); // 'start' or 'destination'
+
+
+  const [showMapModal, setShowMapModal] = useState(false);
+const [locationType, setLocationType] = useState(""); // 'from' or 'to'
+
 
   // UI state
   const [errors, setErrors] = useState({});
@@ -47,6 +63,8 @@ export default function VehicleRequestForm() {
     isError: false
   });
 
+  console.log(selectedStartLocation); // Debugging step
+
   const places = [
     "Faculty of Science",
     "Main Library",
@@ -56,6 +74,18 @@ export default function VehicleRequestForm() {
     "Administration Building",
     "Hostels",
   ];
+
+  const openMap = (type) => {
+    setLocationType(type);
+    setShowMapModal(true);
+  };
+  
+  const handleLocationSelect = (coords) => {
+    const locString = `${coords.lat}, ${coords.lng}`;
+    if (locationType === "from") setFrom(locString);
+    else setTo(locString);
+  };
+  
 
   // Show alert function
   const showAlert = (title, message, isError = false) => {
@@ -91,9 +121,9 @@ export default function VehicleRequestForm() {
     if (!formData.vehicleType) newErrors.vehicleType = "Vehicle type is required";
     if (!formData.purpose.trim()) newErrors.purpose = "Purpose is required";
     if (!formData.date) newErrors.date = "Date is required";
-    if (!from) newErrors.from = "Starting point is required";
-    if (!to) newErrors.to = "Destination is required";
-    if (from === to) newErrors.to = "Destination must be different from starting point";
+    if (!selectedStartLocation) newErrors.selectedStartLocation = "Starting point is required";
+    if (!selectedDestinationLocation) newErrors.selectedDestinationLocation = "Destination is required";
+    if (selectedStartLocation === selectedDestinationLocation) newErrors.selectedDestinationLocation = "Destination must be different from starting point";
     if (!distance || isNaN(distance) || distance <= 0) newErrors.distance = "Valid distance is required";
 
     setErrors(newErrors);
@@ -130,9 +160,19 @@ export default function VehicleRequestForm() {
       formPayload.append("purpose", formData.purpose);
       formPayload.append("date", formData.date);
       formPayload.append("Time", formData.time);
-      formPayload.append("from", from);
-      formPayload.append("to", to);
+      formPayload.append("textfrom", formData.textfrom);
+      formPayload.append("textto", formData.textto);
+      formPayload.append("from", JSON.stringify({
+        type: "Point",
+        coordinates: [selectedStartLocation.lng, selectedStartLocation.lat]
+      }));
+      formPayload.append("to", JSON.stringify({
+        type: "Point",
+        coordinates: [selectedDestinationLocation.lng, selectedDestinationLocation.lat]
+      }));
       formPayload.append("distance", distance);
+
+      console.log("Form Data:", formPayload); // Debugging step
 
       if (formData.supporting_documents) {
         formPayload.append("supporting_documents", formData.supporting_documents);
@@ -174,6 +214,26 @@ export default function VehicleRequestForm() {
           setAlertVisible={setAlertVisible}
         />
       )}
+
+{showLocationModal && (
+  <LocationPickerModal
+    onClose={() => setShowLocationModal(false)}
+    onSelectLocation={(location) => {
+      if (isSelecting === 'start') {
+        setSelectedStartLocation(location);
+      } else {
+        setSelectedDestinationLocation(location);
+      }
+      setShowLocationModal(false);
+    }}
+    initialLocation={
+      isSelecting === 'start'
+        ? selectedStartLocation
+        : selectedDestinationLocation
+    }
+  />
+)}
+
 
       <div className="min-h-screen bg-gray-100 flex items-center justify-center pt-20">
         <div className="bg-white shadow-lg rounded-lg p-6 w-full max-w-md">
@@ -288,103 +348,65 @@ export default function VehicleRequestForm() {
               {errors.time && <p className="mt-1 text-sm text-red-600">{errors.time}</p>}
             </div>
 
-            {/* Starting Point */}
             <div>
-              <label className="block text-sm font-medium text-gray-700">
-                Starting Point *
-              </label>
-              {!showCustomFrom ? (
-                <div className="flex gap-2 mt-1">
-                  <select
-                    value={from}
-                    onChange={(e) => e.target.value === "other" ? setShowCustomFrom(true) : setFrom(e.target.value)}
-                    className={`w-full p-2 rounded-lg border ${errors.from ? "border-red-500" : "border-gray-300"} focus:outline-none focus:ring focus:ring-blue-300`}
-                    required
-                  >
-                    <option value="" disabled>Select starting point</option>
-                    {places.map(place => (
-                      <option key={`from-${place}`} value={place}>{place}</option>
-                    ))}
-                    <option value="other">Other (specify)</option>
-                  </select>
-                </div>
-              ) : (
-                <div className="flex gap-2 mt-1">
-                  <input
-                    type="text"
-                    value={customFrom}
-                    onChange={(e) => {
-                      setCustomFrom(e.target.value);
-                      setFrom(e.target.value);
-                    }}
-                    placeholder="Enter custom starting point"
-                    className={`w-full p-2 rounded-lg border ${errors.from ? "border-red-500" : "border-gray-300"} focus:outline-none focus:ring focus:ring-blue-300`}
-                    required
-                  />
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setShowCustomFrom(false);
-                      setFrom("");
-                      setCustomFrom("");
-                    }}
-                    className="px-3 bg-gray-200 rounded-lg hover:bg-gray-300"
-                  >
-                    ×
-                  </button>
-                </div>
-              )}
-              {errors.from && <p className="mt-1 text-sm text-red-600">{errors.from}</p>}
-            </div>
+  <label className="block text-sm font-medium text-gray-700">Enter the Starting Point *</label>
+  <input
+    type="text"
+    name="textfrom"
+    value={formData.textfrom}
+    onChange={(e) => setFormData({ ...formData, textfrom: e.target.value })}    
+    className="w-full p-2 mt-1 rounded-lg border border-gray-300"
+    placeholder="Enter name of the origin location"
+  />
+  {errors.textfrom && <p className="mt-1 text-sm text-red-600">{errors.textfrom}</p>}
+</div>
 
-            {/* Destination */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700">
-                Destination *
-              </label>
-              {!showCustomTo ? (
-                <div className="flex gap-2 mt-1">
-                  <select
-                    value={to}
-                    onChange={(e) => e.target.value === "other" ? setShowCustomTo(true) : setTo(e.target.value)}
-                    className={`w-full p-2 rounded-lg border ${errors.to ? "border-red-500" : "border-gray-300"} focus:outline-none focus:ring focus:ring-blue-300`}
-                    required
-                  >
-                    <option value="" disabled>Select destination</option>
-                    {places.map(place => (
-                      <option key={`to-${place}`} value={place}>{place}</option>
-                    ))}
-                    <option value="other">Other (specify)</option>
-                  </select>
-                </div>
-              ) : (
-                <div className="flex gap-2 mt-1">
-                  <input
-                    type="text"
-                    value={customTo}
-                    onChange={(e) => {
-                      setCustomTo(e.target.value);
-                      setTo(e.target.value);
-                    }}
-                    placeholder="Enter custom destination"
-                    className={`w-full p-2 rounded-lg border ${errors.to ? "border-red-500" : "border-gray-300"} focus:outline-none focus:ring focus:ring-blue-300`}
-                    required
-                  />
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setShowCustomTo(false);
-                      setTo("");
-                      setCustomTo("");
-                    }}
-                    className="px-3 bg-gray-200 rounded-lg hover:bg-gray-300"
-                  >
-                    ×
-                  </button>
-                </div>
-              )}
-              {errors.to && <p className="mt-1 text-sm text-red-600">{errors.to}</p>}
-            </div>
+{/* From Location (Button Styled) */}
+<div className="mt-4">
+  <label className="block text-sm font-medium text-gray-700">From *</label>
+  <button
+    type="button"
+    onClick={() => { setIsSelecting('start'); setShowLocationModal(true); }}
+    className="w-full p-2 mt-1 rounded-lg border border-gray-300 text-white font-medium"
+    style={{
+      backgroundColor: '#800000',
+    }}
+  >
+    {selectedStartLocation?.address || "Click to select location"}
+  </button>
+  {errors.from && <p className="mt-1 text-sm text-red-600">{errors.from}</p>}
+</div>
+
+{/* To Name (TextTo) */}
+<div className="mt-4">
+  <label className="block text-sm font-medium text-gray-700">Enter the Destination *</label>
+  <input
+    type="text"
+    name="textto"
+    value={formData.textto}
+    onChange={(e) => setFormData({ ...formData, textto: e.target.value })}    
+    className="w-full p-2 mt-1 rounded-lg border border-gray-300"
+    placeholder="Enter name of the destination location"
+  />
+  {errors.textto && <p className="mt-1 text-sm text-red-600">{errors.textto}</p>}
+</div>
+
+{/* To Location (Button Styled) */}
+<div className="mt-4">
+  <label className="block text-sm font-medium text-gray-700">To *</label>
+  <button
+    type="button"
+    onClick={() => { setIsSelecting('destination'); setShowLocationModal(true); }}
+    className="w-full p-2 mt-1 rounded-lg border border-gray-300 text-white font-medium"
+    style={{
+      backgroundColor: '#800000',
+    }}
+  >
+    {selectedDestinationLocation?.address || "Click to select location"}
+  </button>
+  {errors.to && <p className="mt-1 text-sm text-red-600">{errors.to}</p>}
+</div>
+
 
             {/* Distance */}
             <div>

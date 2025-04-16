@@ -39,15 +39,17 @@ function Dashboard() {
               <div className="flex items-center mb-4">
                 <Calendar className="h-6 w-6 text-ash-600" />
                 <h3 className="ml-2 text-xl font-bold text-ash-700">
-                  Trip Details
+                  Ongoing Trip Details
                 </h3>
               </div>
               <p className="text-ash-600 mb-6">
                 View and manage your trip details, schedules, and history.
               </p>
+              <a href="/tracking-dashboard">
               <button className="w-full bg-ash-600 text-white px-6 py-2 rounded-md hover:bg-ash-500 transition duration-300">
                 View Details
               </button>
+              </a>
             </div>
           </div>
 

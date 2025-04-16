@@ -63,6 +63,7 @@ export default function Login() {
 
         // Store token and user data via AuthContext
         login(response.data.token, {
+          token: response.data.token,
           _id: response.data._id,
           full_name: response.data.full_name,
           email: response.data.email,

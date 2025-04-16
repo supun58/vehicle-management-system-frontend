@@ -15,58 +15,88 @@ import {
   XCircle,
   Clock,
   MapPin,
-  Users
+  Users,
+  Navigation
 } from 'lucide-react';
 
-function RequestDetails({ request, onBack}) {
+function RequestDetails({ request, onBack }) {
   const [showDriverModal, setShowDriverModal] = useState(false);
   const [selectedDriver, setSelectedDriver] = useState(null);
   
-  // Mock driver data - replace with actual API call
+  // Mock driver data
   const availableDrivers = [
     { id: 1, name: 'John Doe', license: 'B1234567', contact: '0712345678' },
     { id: 2, name: 'Jane Smith', license: 'B7654321', contact: '0776543210' },
     { id: 3, name: 'Robert Johnson', license: 'B1122334', contact: '0711223344' },
   ];
 
-  if (!request) return null;
+  if (!request) {
+    return <div className="min-h-screen bg-gradient-to-br from-[#800000] via-gray-700 to-[#de9e28] mt-14 flex items-center justify-center">
+      <div className="bg-white p-6 rounded-lg shadow-lg">Loading request details...</div>
+    </div>;
+  }
 
   const getStatusColor = (status) => {
-    switch (status?.toLowerCase()) {
-      case 'approved':
-        return 'bg-green-100 text-green-800';
-      case 'rejected':
-        return 'bg-red-100 text-red-800';
-      case 'facultyapproved':
-        return 'bg-blue-100 text-blue-800';
-      default:
-        return 'bg-yellow-100 text-yellow-800';
+    if (!status) return 'bg-gray-100 text-gray-800';
+    switch (status.toLowerCase()) {
+      case 'approved': return 'bg-green-100 text-green-800';
+      case 'rejected': return 'bg-red-100 text-red-800';
+      case 'facultyapproved': return 'bg-blue-100 text-blue-800';
+      default: return 'bg-yellow-100 text-yellow-800';
     }
   };
 
-  const handleApproveClick = () => {
-    if (request.request_type === 'VehicleRequest') {
-      setShowDriverModal(true);
-    } else {
-      handleApprove(request.id);
+  const openMapWithCoordinates = (location) => {
+    try {
+      if (!location?.coordinates) {
+        console.error('Invalid location data');
+        return;
+      }
+      const [longitude, latitude] = location.coordinates;
+      const url = `https://www.google.com/maps?q=${latitude},${longitude}`;
+      window.open(url, '_blank');
+    } catch (error) {
+      console.error('Error opening map:', error);
     }
   };
 
-  const handleRejectClick = () => {
-   handleReject();
-  };
-
-  const handleDriverSelect = (driver) => {
-    setSelectedDriver(driver);
-  };
-
-  const confirmApproval = () => {
-    if (selectedDriver) {
-      handleApprove(request.id, selectedDriver);
-      setShowDriverModal(false);
+  const formatCoordinates = (location) => {
+    if (!location?.coordinates) return 'Location not specified';
+    try {
+      const [longitude, latitude] = location.coordinates;
+      return `${latitude?.toFixed(6) || 'N/A'}, ${longitude?.toFixed(6) || 'N/A'}`;
+    } catch (error) {
+      console.error('Error formatting coordinates:', error);
+      return 'Invalid coordinates';
     }
   };
 
+  const getDirections = () => {
+    try {
+      if (!request.from?.coordinates || !request.to?.coordinates) {
+        console.error('Missing coordinates for directions');
+        return;
+      }
+      const [fromLng, fromLat] = request.from.coordinates;
+      const [toLng, toLat] = request.to.coordinates;
+      const url = `https://www.google.com/maps/dir/?api=1&origin=${fromLat},${fromLng}&destination=${toLat},${toLng}&travelmode=driving`;
+      window.open(url, '_blank');
+    } catch (error) {
+      console.error('Error getting directions:', error);
+    }
+  };
+
+  // const handleDriverSelect = (driver) => {
+  //   setSelectedDriver(driver);
+  // };
+
+  // const confirmApproval = () => {
+  //   if (selectedDriver && handleApprove) {
+  //     handleApprove(request.id, selectedDriver);
+  //     setShowDriverModal(false);
+  //   }
+  // };
+  
   const renderGatePassDetails = () => (
     <>
       {/* Personal Information */}
@@ -280,27 +310,49 @@ function RequestDetails({ request, onBack}) {
             <Clock className="h-5 w-5 text-[#800000]" />
             <div>
               <p className="text-sm text-gray-600">Time</p>
-
               <p className="font-medium">{request.newtime}</p>
             </div>
           </div>
 
-          <div className="grid grid-cols-2 gap-4">
+          {/* Location and Directions */}
+          <div className="space-y-3">
             <div className="flex items-center gap-3">
               <MapPin className="h-5 w-5 text-[#800000]" />
               <div>
                 <p className="text-sm text-gray-600">From</p>
-                <p className="font-medium">{request.from}</p>
+                <div 
+                  className="font-medium cursor-pointer text-blue-600 hover:underline"
+                  onClick={() => openMapWithCoordinates(request.from)}
+                >
+                  {formatCoordinates(request.from)}
+                </div>
               </div>
             </div>
+
             <div className="flex items-center gap-3">
               <MapPin className="h-5 w-5 text-[#800000]" />
               <div>
                 <p className="text-sm text-gray-600">To</p>
-                <p className="font-medium">{request.to}</p>
+                <div 
+                  className="font-medium cursor-pointer text-blue-600 hover:underline"
+                  onClick={() => openMapWithCoordinates(request.to)}
+                >
+                  {formatCoordinates(request.to)}
+                </div>
               </div>
             </div>
+
+            <button
+              onClick={getDirections}
+              disabled={!request.from?.coordinates || !request.to?.coordinates}
+              className="flex items-center gap-2 px-4 py-2 bg-[#800000] text-white rounded-lg hover:bg-[#6a0000] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              <Navigation className="h-4 w-4" />
+              <span>Get Directions</span>
+            </button>
           </div>
+
+
           <div className="flex items-center gap-3">
             <Clock className="h-5 w-5 text-[#800000]" />
             <div>
@@ -463,13 +515,9 @@ function RequestDetails({ request, onBack}) {
                 </div>
               </div>
             )}
-
-          
           </div>
         </div>
       </div>
-
-     
     </div>
   );
 }
