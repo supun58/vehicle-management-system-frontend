@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
+import Alert from "../../components/Alert";
 
 const NavigateVehicle = () => {
   const { regNumber } = useParams();
   const [vehicle, setVehicle] = useState(null);
   const navigate = useNavigate();
+  const [alert, setAlert] = useState(null);
 
   useEffect(() => {
     fetch(`http://localhost:5000/api/auth/vehicles/${regNumber}`)
@@ -19,8 +21,11 @@ const NavigateVehicle = () => {
       await axios.delete(
         `http://localhost:5000/api/auth/vehicles/${registrationNumber}`
       );
-      alert("Vehicle deleted successfully");
-      navigate("/vehicles"); // Or wherever you want to go after deletion
+      setAlert({
+        title: "Vehicle Deleted",
+        message: "The vehicle has been successfully deleted.",
+      });
+      navigate("/vehicle-management"); // Or wherever you want to go after deletion
     } catch (error) {
       console.error("Error deleting vehicle:", error);
     }
@@ -28,6 +33,14 @@ const NavigateVehicle = () => {
 
   return vehicle ? (
     <div className="p-6 max-w-2xl mx-auto bg-white rounded-2xl shadow-md mt-24">
+      {alert && (
+        <Alert
+          title={alert.title}
+          message={alert.message}
+          setAlertVisible={(visible) => setAlert({ ...alert, visible })}
+        />
+      )}
+
       <img
         className=" mb-4 w-full h-60 object-cover rounded-xl"
         src={
@@ -59,6 +72,7 @@ const NavigateVehicle = () => {
       <p>
         <strong>Status:</strong> {vehicle.status}
       </p>
+
       <button
         className="mt-4 px-4 py-2 bg-red-500 text-white rounded-xl hover:bg-red-600"
         onClick={() => handleRemove(vehicle.registrationNumber)}
