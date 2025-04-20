@@ -1,6 +1,6 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
-import { LoadScript } from "@react-google-maps/api";  
+import { LoadScript } from "@react-google-maps/api";
 
 //importing components
 import Footer from "./components/footer";
@@ -32,6 +32,8 @@ import EmergencyReport from "./pages/EmergencyReport.jsx";
 import EmergencyHandle from "./pages/Admin-Dashboard/EmergencyHandle.jsx";
 import TaskDetails from "./pages/Driver-Dashboard/TaskDetails.jsx";
 import TrackingDashboard from "./pages/User-Dashboard/TrackingDashboard.jsx";
+import UserProfile from "./pages/UserProfile.jsx";
+import EditProfile from "./pages/EditProfile";
 
 function App() {
   return (
@@ -39,7 +41,7 @@ function App() {
       <LoadScript
         googleMapsApiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY}
         libraries={["places", "marker"]}
-     />
+      />
       <AuthProvider>
         <Navbar />
 
@@ -66,7 +68,10 @@ function App() {
           <Route path="/add-vehicle" element={<AddVehicleForm />} />
 
           {/* Admin1 dashboard*/}
-          <Route path="/faculty-admin-dashboard" element={<Admin1Dashboard />} />
+          <Route
+            path="/faculty-admin-dashboard"
+            element={<Admin1Dashboard />}
+          />
 
           {/*Guard dashboard */}
           <Route path="/guard-dashboard" element={<GuardDashboard />} />
@@ -90,7 +95,10 @@ function App() {
           <Route path="send-message" element={<SendMessage />} />
 
           {/* Vehicle Navigation */}
-          <Route path="/navigate-vehicle/:regNumber" element={<NavigateVehicle />} />
+          <Route
+            path="/navigate-vehicle/:regNumber"
+            element={<NavigateVehicle />}
+          />
 
           {/* Request Details */}
           <Route path="/request-details/:id" element={<RequestDetails />} />
@@ -106,17 +114,26 @@ function App() {
 
           {/* Task Details */}
           <Route path="/task-details/:id" element={<TaskDetails />} />
-          
+
           {/* Tracking Dashboard */}
           <Route path="/tracking-dashboard" element={<TrackingDashboard />} />
-          
+
           {/* 404 Not Found */}
-          <Route path="*" element={
-            <div className="flex justify-center items-center h-screen">
-              <h1 className="text-4xl font-bold">404 Not Found</h1>
-            </div>
-          } />
-          
+          <Route
+            path="*"
+            element={
+              <div className="flex justify-center items-center h-screen">
+                <h1 className="text-4xl font-bold">404 Not Found</h1>
+              </div>
+            }
+          />
+          {/* user profile*/}
+          <Route path="/profile:id" element={<UserProfile />} />
+
+          {/* Edit Profile */}
+          <Route path="/edit-profile" element={<EditProfile />} />
+
+          {/* Emergency Handle */}
         </Routes>
 
         {/* Footer */}

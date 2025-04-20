@@ -90,7 +90,9 @@ export default function Login() {
         } else if (response.data.account_status === "Faculty Admin") {
           navigate("/faculty-admin-dashboard");
         }
+        localStorage.setItem("userId", response.data._id);
         localStorage.setItem("driverId", response.data._id);
+
         setAlertTitle("Success");
         setAlertMessage("Login successful!");
         setAlertVisible(true);

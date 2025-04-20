@@ -46,8 +46,15 @@ const AdminDashboard = () => {
           onClick={async () => {
             try {
               // Mark the emergency as seen
-              await axios.put(
-                `http://localhost:5000/api/auth/emergencies/${latestEmergency.id}/seen`
+              const unseenEmergencies = emergencies.filter((e) => !e.seen);
+
+              // Send requests to mark each as seen
+              await Promise.all(
+                unseenEmergencies.map((emergency) =>
+                  axios.put(
+                    `http://localhost:5000/api/auth/emergencies/${emergency.id}/seen`
+                  )
+                )
               );
               // Optionally update your local state if needed (if you're tracking emergencies in state)
               setEmergencies((prev) =>
@@ -64,8 +71,7 @@ const AdminDashboard = () => {
             }
           }}
         >
-          🚨 {latestEmergency.emergencyType} reported at{" "}
-          {latestEmergency.location}!
+          Emergency alert! Click to view details.
         </div>
       )}
       <main className="pt-16 pb-12">
