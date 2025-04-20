@@ -74,11 +74,11 @@ const AdminDashboard = () => {
           Emergency alert! Click to view details.
         </div>
       )}
-      <main className="pt-16 pb-12">
+       <main className="pt-16 pb-12">
         <div className="container mx-auto px-4 py-6">
           {/* Header Section */}
-          <div className="mb-8 text-center">
-            <h1 className="text-3xl font-bold text-white mb-2">
+          <div className="mb-4 text-center">
+            <h1 className="text-3xl font-bold text-white mb-1">
               Admin Dashboard
             </h1>
             <p className="text-ash-200">
@@ -87,7 +87,7 @@ const AdminDashboard = () => {
           </div>
 
           {/* Cards Section */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mb-10 max-w-7xl mx-auto">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-7 mb-6 max-w-7xl mx-auto">
             {/* Add Vehicle */}
             <div className="bg-white/90 backdrop-blur-sm rounded-xl shadow-2xl p-4 hover:transform hover:-translate-y-1 transition duration-300 w-full max-w-sm mx-auto">
               <div className="flex items-center mb-3">
@@ -127,7 +127,7 @@ const AdminDashboard = () => {
             {/* Ongoing Trips */}
             <div className="bg-white/90 backdrop-blur-sm rounded-xl shadow-2xl p-4 hover:transform hover:-translate-y-1 transition duration-300 w-full max-w-sm mx-auto">
               <div className="flex items-center mb-3">
-                <Calendar className="h-6 w-5 text-maroon-600" />
+                <Calendar className="h-6 w-5 text-blue-600" />
                 <h3 className="ml-2 text-base font-bold text-maroon-700">
                   Ongoing Trips
                 </h3>
@@ -135,9 +135,11 @@ const AdminDashboard = () => {
               <p className="text-ash-600 mb-3 text-sm">
                 Track and manage ongoing trips in real-time.
               </p>
+              <a href="/ongoing-trips">
               <button className="w-full bg-maroon-700 text-white px-4 py-2 rounded-md hover:bg-maroon-600 transition duration-300 text-xs">
                 View Trips
               </button>
+              </a>
             </div>
 
             {/* Messages */}
@@ -205,9 +207,8 @@ const AdminDashboard = () => {
           <div className="flex justify-center">
             <div className="bg-white/90 backdrop-blur-sm rounded-xl shadow-2xl p-4 hover:transform hover:-translate-y-1 transition duration-300 w-full max-w-sm mx-auto">
               <div className="flex items-center mb-3">
-                <div className="p-1.5 rounded-lg bg-maroon-100/30">
-                  <Calendar className="h-6 w-5 text-maroon-600" />
-                </div>
+                  <Calendar className="h-6 w-5 text-green-600" />
+             
                 <h3 className="ml-2 text-base font-bold text-maroon-700">
                   Past Trip History
                 </h3>
@@ -215,7 +216,12 @@ const AdminDashboard = () => {
               <p className="text-ash-600 mb-3 text-sm">
                 Complete records of past trips & logs.
               </p>
-              <button className="w-full bg-maroon-700 text-white px-4 py-2 rounded-md hover:bg-maroon-600 transition duration-300 text-xs">
+
+              <button
+              onClick={() => {
+                window.location.href = "/past-trips";
+              }}
+              className="w-full bg-maroon-700 text-white px-4 py-2 rounded-md hover:bg-maroon-600 transition duration-300 text-xs">
                 View History
               </button>
             </div>

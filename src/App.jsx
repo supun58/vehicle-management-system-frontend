@@ -34,6 +34,10 @@ import TaskDetails from "./pages/Driver-Dashboard/TaskDetails.jsx";
 import TrackingDashboard from "./pages/User-Dashboard/TrackingDashboard.jsx";
 import UserProfile from "./pages/UserProfile.jsx";
 import EditProfile from "./pages/EditProfile";
+import OngoingTrips from "./pages/Admin-Dashboard/OngoingTrips.jsx";
+import AdminTrackingDashboard from "./pages/Admin-Dashboard/AdminTrackingDashboard.jsx";
+import PastTrips from "./pages/Admin-Dashboard/PastTrips.jsx";
+import DriverPastTrips from "./pages/Driver-Dashboard/DriverPastTrips.jsx";
 
 function App() {
   return (
@@ -118,7 +122,19 @@ function App() {
           {/* Tracking Dashboard */}
           <Route path="/tracking-dashboard" element={<TrackingDashboard />} />
 
-          {/* 404 Not Found */}
+            {/* Ongoing Trips */}
+            <Route path="/ongoing-trips" element={<OngoingTrips />} />
+  
+            {/* Admin Tracking Dashboard */}
+            <Route path="/admin-tracking-dashboard/:id" element={<AdminTrackingDashboard />} />
+  
+            {/* Past Trips */}
+            <Route path="/past-trips" element={<PastTrips />} />
+  
+            {/* Driver Past Trips */}
+            <Route path="/driver-past-trips" element={<DriverPastTrips />} />
+            
+            {/* 404 Not Found */}
           <Route
             path="*"
             element={
