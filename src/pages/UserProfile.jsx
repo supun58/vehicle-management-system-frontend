@@ -120,7 +120,7 @@ const UserProfile = () => {
               <p className="text-lg font-semibold">{user.user_type}</p>
             </div>
 
-            {!(user.account_status === "Admin") && (
+            {!(user.user_type === "Admin") && (
               <div className="border-b border-gray-300 pb-2">
                 <p className="text-gray-500 text-sm">Phone Number</p>
                 <p className="text-lg font-semibold">{user.phone}</p>
@@ -135,12 +135,14 @@ const UserProfile = () => {
                 Edit Profile
               </button>
             </a>
+            {!(user.user_type === "Admin") && (
             <button
               onClick={handleDelete}
               className="w-1/2 py-2 bg-blue-400 text-white font-semibold rounded-lg shadow hover:bg-[#5c1d23] transition duration-300"
             >
               Delete Account
             </button>
+            )}
           </div>
         </div>
       ) : (
