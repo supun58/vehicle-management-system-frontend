@@ -201,7 +201,7 @@ const TrackingDashboard = () => {
     }
 
     setConnectionStatus('connecting');
-    const ws = new WebSocket('ws://localhost:5050/ws/driver-tracking');
+    const ws = new WebSocket('wss://urban-space-fiesta-pjg55v44qp6gfr96v-5050.app.github.dev/ws/driver-tracking');
 
     ws.onopen = () => {
       reconnectAttempts.current = 0;
