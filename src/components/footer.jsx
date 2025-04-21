@@ -33,7 +33,7 @@ const Footer = () => {
                     <div className="text-white flex flex-col mx-16">
                         <h2 className="text-lg font-bold mb-4" style={{ color: '#de9e28' }}>About Us</h2>
                         <p className="text-sm">
-                            The University of Example is a leading institution dedicated to academic excellence and innovation. Our mission is to foster knowledge, creativity, and integrity in our students and faculty.
+                            The University of Ruhuna is a leading institution dedicated to academic excellence and innovation. Our mission is to foster knowledge, creativity, and integrity in our students and faculty.
                         </p>
                     </div>
 
@@ -41,9 +41,9 @@ const Footer = () => {
                     <div className="text-white flex flex-col mx-20">
                         <h2 className="text-lg font-bold mb-4" style={{ color: '#de9e28' }}>Quick Links</h2>
                         <ul className="space-y-2 text-sm">
-                            <li><a href="#" className="hover:underline">Login</a></li>
-                            <li><a href="#" className="hover:underline">Visitor</a></li>
-                            <li><a href="#" className="hover:underline">About Us</a></li>
+                            <li><a href="/" className="hover:underline">Login</a></li>
+                            <li><a href="/visitor" className="hover:underline">Visitor</a></li>
+                            <li><a href="/about-us" className="hover:underline">About Us</a></li>
                             <li><a href="#" className="hover:underline">Contact</a></li>
                         </ul>
                     </div>

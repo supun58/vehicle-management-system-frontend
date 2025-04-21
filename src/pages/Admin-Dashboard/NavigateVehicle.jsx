@@ -6,6 +6,7 @@ import Alert from "../../components/Alert";
 const NavigateVehicle = () => {
   const { regNumber } = useParams();
   const [vehicle, setVehicle] = useState(null);
+  const [drivers, setDrivers] = useState(null);
   const navigate = useNavigate();
   const [alert, setAlert] = useState(null);
 
@@ -15,6 +16,24 @@ const NavigateVehicle = () => {
       .then((data) => setVehicle(data))
       .catch((err) => console.error("Error fetching vehicles:", err));
   }, []);
+
+  //get all drivers from the backend
+  useEffect(() => {
+    const fetchDrivers = async () => {
+      try {
+        const response = await axios.get("http://localhost:5000/api/auth/drivers");
+        const drivers = response.data;
+        setDrivers(drivers);
+        //console.log("Drivers:", drivers);
+        return drivers;
+      } catch (error) {
+        console.error("Error fetching drivers:", error);
+      }
+    };
+
+    fetchDrivers();
+  }, []);
+
 
   const handleRemove = async (registrationNumber) => {
     try {
@@ -72,6 +91,12 @@ const NavigateVehicle = () => {
       <p>
         <strong>Status:</strong> {vehicle.status}
       </p>
+
+      {/* {(toString(drivers.role_details?.driver?.vehicleAssigned) === (toString(vehicle.make)+" "+toString(vehicle.model)+" "+toString(vehicle.registrationNumber))) && (
+      <p>
+        <strong>Assigned Driver:</strong> {drivers.full_name}
+      </p>
+  )} */}
 
       <button
         className="mt-4 px-4 py-2 bg-red-500 text-white rounded-xl hover:bg-red-600"
