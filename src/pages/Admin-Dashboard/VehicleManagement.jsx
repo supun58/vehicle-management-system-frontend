@@ -6,7 +6,7 @@ function VehicleManagement() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch("http://localhost:5000/api/auth/vehicles")
+    fetch("https://urban-space-fiesta-pjg55v44qp6gfr96v-5000.app.github.dev/api/auth/vehicles")
       .then((res) => res.json())
       .then((data) => setVehicles(data))
       .catch((err) => console.error("Error fetching vehicles:", err));

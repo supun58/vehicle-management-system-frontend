@@ -17,7 +17,7 @@ const UserProfile = () => {
     const fetchUser = async () => {
       try {
         const res = await axios.get(
-          `http://localhost:5000/api/auth/users/${id}`
+          `https://urban-space-fiesta-pjg55v44qp6gfr96v-5000.app.github.dev/api/auth/users/${id}`
         );
         const data = res.data;
         console.log("User data:", data);
@@ -30,7 +30,7 @@ const UserProfile = () => {
             profilePicUrl: data.profilePicUrl,
           };
           if (data.profilePicUrl) {
-            setPreview(`http://localhost:5000${data.profilePicUrl}`);
+            setPreview(`https://urban-space-fiesta-pjg55v44qp6gfr96v-5000.app.github.dev${data.profilePicUrl}`);
           }
           setUser(newdata);
         }
@@ -41,7 +41,7 @@ const UserProfile = () => {
         // setUser(data);
 
         if (data.profilePicUrl) {
-          setPreview(`http://localhost:5000${data.profilePicUrl}`);
+          setPreview(`https://urban-space-fiesta-pjg55v44qp6gfr96v-5000.app.github.dev${data.profilePicUrl}`);
         }
       } catch (err) {
         console.error("Error fetching user:", err);
@@ -60,7 +60,7 @@ const UserProfile = () => {
 
     try {
       const res = await axios.delete(
-        `http://localhost:5000/api/auth/users/${id}`
+        `https://urban-space-fiesta-pjg55v44qp6gfr96v-5000.app.github.dev/api/auth/users/${id}`
       );
       localStorage.clear(); // Clear saved session
       setAlert({

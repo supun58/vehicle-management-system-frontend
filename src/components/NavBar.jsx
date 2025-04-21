@@ -58,11 +58,11 @@ export default function Navbar() {
     const fetchProfilePic = async () => {
       try {
         const res = await axios.get(
-          `http://localhost:5000/api/auth/users/${userId}`
+          `https://urban-space-fiesta-pjg55v44qp6gfr96v-5000.app.github.dev/api/auth/users/${userId}`
         );
         const user = res.data;
         if (user.profilePicUrl) {
-          setProfilePic(`http://localhost:5000${user.profilePicUrl}`);
+          setProfilePic(`https://urban-space-fiesta-pjg55v44qp6gfr96v-5000.app.github.dev${user.profilePicUrl}`);
         }
       } catch (error) {
         console.error("Error fetching profile pic:", error);

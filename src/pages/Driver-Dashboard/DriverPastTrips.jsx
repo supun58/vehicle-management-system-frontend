@@ -42,7 +42,7 @@ const DriverPastTrips = () => {
           headers: { Authorization: `Bearer ${token}` }
         };
 
-        const response = await axios.get('http://localhost:5000/api/auth/past-requests', config);
+        const response = await axios.get('https://urban-space-fiesta-pjg55v44qp6gfr96v-5000.app.github.dev/api/auth/past-requests', config);
         const data = response.data;
 
         // Filter tasks to only include those assigned to the current driver

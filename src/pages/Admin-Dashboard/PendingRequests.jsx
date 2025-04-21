@@ -68,7 +68,7 @@ const [driversLoading, setDriversLoading] = useState(false);
 const getAvailableDrivers = async () => {
   setDriversLoading(true);
   try {
-    const response = await axios.get('http://localhost:5000/api/auth/getdrivers', {
+    const response = await axios.get('https://urban-space-fiesta-pjg55v44qp6gfr96v-5000.app.github.dev/api/auth/getdrivers', {
       headers: { Authorization: `Bearer ${token}` }
     });
     
@@ -113,10 +113,10 @@ useEffect(() => {
         
         // Fetch both gate pass and vehicle requests in parallel
         const [gatePassResponse, vehicleResponse] = await Promise.all([
-          axios.get('http://localhost:5000/api/auth/pending-requests', {
+          axios.get('https://urban-space-fiesta-pjg55v44qp6gfr96v-5000.app.github.dev/api/auth/pending-requests', {
             headers: { Authorization: `Bearer ${token}` }
           }),
-          axios.get('http://localhost:5000/api/auth/vehicle-requests', {
+          axios.get('https://urban-space-fiesta-pjg55v44qp6gfr96v-5000.app.github.dev/api/auth/vehicle-requests', {
             headers: { Authorization: `Bearer ${token}` }
           })
         ]);
@@ -234,8 +234,8 @@ useEffect(() => {
   
       // Determine the API endpoint
       const endpoint = isVehicleRequest ? 
-        `http://localhost:5000/api/auth/vehicle-request/${request._id}` :
-        `http://localhost:5000/api/auth/pending-requests/${request._id}`;
+        `https://urban-space-fiesta-pjg55v44qp6gfr96v-5000.app.github.dev/api/auth/vehicle-request/${request._id}` :
+        `https://urban-space-fiesta-pjg55v44qp6gfr96v-5000.app.github.dev/api/auth/pending-requests/${request._id}`;
   
       const response = await axios.put(endpoint, approvalData, {
         headers: { Authorization: `Bearer ${token}` }
@@ -291,8 +291,8 @@ useEffect(() => {
 
       const isVehicleRequest = selectedRequest?.request_type === 'VehicleRequest';
       const endpoint = isVehicleRequest ? 
-        `http://localhost:5000/api/auth/vehicle-request/${selectedRequest._id}` :
-        `http://localhost:5000/api/auth/pending-requests/${selectedRequest._id}`;
+        `https://urban-space-fiesta-pjg55v44qp6gfr96v-5000.app.github.dev/api/auth/vehicle-request/${selectedRequest._id}` :
+        `https://urban-space-fiesta-pjg55v44qp6gfr96v-5000.app.github.dev/api/auth/pending-requests/${selectedRequest._id}`;
 
       const rejectionData = { 
         status: 'Rejected', 
@@ -373,8 +373,8 @@ useEffect(() => {
   
       const isVehicleRequest = selectedRequest.request_type === 'VehicleRequest';
       const endpoint = isVehicleRequest ? 
-        `http://localhost:5000/api/auth/vehicle-request/${selectedRequest._id}` :
-        `http://localhost:5000/api/auth/pending-requests/${selectedRequest._id}`;
+        `https://urban-space-fiesta-pjg55v44qp6gfr96v-5000.app.github.dev/api/auth/vehicle-request/${selectedRequest._id}` :
+        `https://urban-space-fiesta-pjg55v44qp6gfr96v-5000.app.github.dev/api/auth/pending-requests/${selectedRequest._id}`;
   
       const editData = {
         status: newStatus,
@@ -480,8 +480,8 @@ useEffect(() => {
 
       const isVehicleRequest = selectedRequest.request_type === 'VehicleRequest';
       const endpoint = isVehicleRequest ? 
-        `http://localhost:5000/api/auth/vehicle-request/${selectedRequest._id}` :
-        `http://localhost:5000/api/auth/pending-requests/${selectedRequest._id}`;
+        `https://urban-space-fiesta-pjg55v44qp6gfr96v-5000.app.github.dev/api/auth/vehicle-request/${selectedRequest._id}` :
+        `https://urban-space-fiesta-pjg55v44qp6gfr96v-5000.app.github.dev/api/auth/pending-requests/${selectedRequest._id}`;
 
       await axios.delete(endpoint, {
         headers: { Authorization: `Bearer ${token}` }

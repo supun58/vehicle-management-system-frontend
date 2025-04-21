@@ -89,7 +89,7 @@ const TaskDetails = () => {
   useEffect(() => {
     const fetchTask = async () => {
       try {
-        const res = await axios.get(`http://localhost:5000/api/auth/vehicle-request/${id}`, {
+        const res = await axios.get(`https://urban-space-fiesta-pjg55v44qp6gfr96v-5000.app.github.dev/api/auth/vehicle-request/${id}`, {
           headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
         });
         setTask(res.data);
@@ -234,7 +234,7 @@ const TaskDetails = () => {
     setTripStarted(false);
     try {
       await axios.patch(
-        `http://localhost:5000/api/auth/${id}/complete`,
+        `https://urban-space-fiesta-pjg55v44qp6gfr96v-5000.app.github.dev/api/auth/${id}/complete`,
         { tripDuration: elapsedTime, 
             distance: distance,
             driverLocation: driverLocation,

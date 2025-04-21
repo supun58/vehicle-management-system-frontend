@@ -47,8 +47,8 @@ export const approveRequest = async (request, user, token, logout) => {
     }
 
     const endpoint = isVehicleRequest ? 
-      `http://localhost:5000/api/auth/vehicle-request/${request._id}` :
-      `http://localhost:5000/api/auth/pending-requests/${request._id}`;
+      `https://urban-space-fiesta-pjg55v44qp6gfr96v-5000.app.github.dev/api/auth/vehicle-request/${request._id}` :
+      `https://urban-space-fiesta-pjg55v44qp6gfr96v-5000.app.github.dev/api/auth/pending-requests/${request._id}`;
 
     const response = await axios.put(endpoint, approvalData, {
       headers: { Authorization: `Bearer ${token}` }
@@ -74,8 +74,8 @@ export const rejectRequest = async (request, rejectionReason, user, token, logou
 
     const isVehicleRequest = request.request_type === 'VehicleRequest';
     const endpoint = isVehicleRequest ? 
-      `http://localhost:5000/api/auth/vehicle-request/${request._id}` :
-      `http://localhost:5000/api/auth/pending-requests/${request._id}`;
+      `https://urban-space-fiesta-pjg55v44qp6gfr96v-5000.app.github.dev/api/auth/vehicle-request/${request._id}` :
+      `https://urban-space-fiesta-pjg55v44qp6gfr96v-5000.app.github.dev/api/auth/pending-requests/${request._id}`;
 
     const rejectionData = { 
       status: 'Rejected', 

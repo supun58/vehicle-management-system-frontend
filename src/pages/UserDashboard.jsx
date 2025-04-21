@@ -17,7 +17,7 @@ function Dashboard() {
     const fetchRecentTrips = async () => {
       try {
         // Replace with your actual API endpoint
-        const response = await fetch('http://localhost:5000/api/auth/vehicle-requests', {
+        const response = await fetch('https://urban-space-fiesta-pjg55v44qp6gfr96v-5000.app.github.dev/api/auth/vehicle-requests', {
           headers: {
             'Authorization': `Bearer ${localStorage.getItem('token')}`,
             'Content-Type': 'application/json'

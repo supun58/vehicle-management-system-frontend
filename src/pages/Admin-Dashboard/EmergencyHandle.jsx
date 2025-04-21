@@ -5,7 +5,7 @@ import { AlertTriangle } from "lucide-react";
 const DRIVER_ID = localStorage.getItem("driverId");
 
 // Connect to the backend Socket.IO server
-const socket = io("http://localhost:5000", {
+const socket = io("https://urban-space-fiesta-pjg55v44qp6gfr96v-5000.app.github.dev", {
   transports: ["websocket"],
 });
 
@@ -15,7 +15,7 @@ export default function EmergencyHandle() {
   useEffect(() => {
     // Fetch past emergencies when the component mounts
     axios
-      .get("http://localhost:5000/api/auth/emergencies")
+      .get("https://urban-space-fiesta-pjg55v44qp6gfr96v-5000.app.github.dev/api/auth/emergencies")
       .then((res) => setEmergencies(res.data))
       .catch((err) => console.error("Error fetching emergencies:", err));
 

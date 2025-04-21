@@ -42,7 +42,7 @@ function DriverDashboard() {
           return;
         }
         const res = await axios.get(
-          `http://localhost:5000/api/auth/messages/driver/${DRIVER_ID}`
+          `https://urban-space-fiesta-pjg55v44qp6gfr96v-5000.app.github.dev/api/auth/messages/driver/${DRIVER_ID}`
         );
         setMessages(res.data);
         console.log("Messages fetched successfully", res.data);
@@ -59,7 +59,7 @@ function DriverDashboard() {
     const fetchSchedules = async () => {
       try {
         setLoading(true);
-        const response = await fetch(`http://localhost:5000/api/auth/driver-schedules/${id}`, {
+        const response = await fetch(`https://urban-space-fiesta-pjg55v44qp6gfr96v-5000.app.github.dev/api/auth/driver-schedules/${id}`, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },

@@ -11,7 +11,7 @@ const NavigateVehicle = () => {
   const [alert, setAlert] = useState(null);
 
   useEffect(() => {
-    fetch(`http://localhost:5000/api/auth/vehicles/${regNumber}`)
+    fetch(`https://urban-space-fiesta-pjg55v44qp6gfr96v-5000.app.github.dev/api/auth/vehicles/${regNumber}`)
       .then((res) => res.json())
       .then((data) => setVehicle(data))
       .catch((err) => console.error("Error fetching vehicles:", err));
@@ -21,7 +21,7 @@ const NavigateVehicle = () => {
   useEffect(() => {
     const fetchDrivers = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/api/auth/drivers");
+        const response = await axios.get("https://urban-space-fiesta-pjg55v44qp6gfr96v-5000.app.github.dev/api/auth/drivers");
         const drivers = response.data;
         setDrivers(drivers);
         //console.log("Drivers:", drivers);
@@ -38,7 +38,7 @@ const NavigateVehicle = () => {
   const handleRemove = async (registrationNumber) => {
     try {
       await axios.delete(
-        `http://localhost:5000/api/auth/vehicles/${registrationNumber}`
+        `https://urban-space-fiesta-pjg55v44qp6gfr96v-5000.app.github.dev/api/auth/vehicles/${registrationNumber}`
       );
       setAlert({
         title: "Vehicle Deleted",

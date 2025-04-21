@@ -28,7 +28,7 @@ const EditProfile = () => {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const res = await axios.get(`http://localhost:5000/api/auth/users/${id}`);
+        const res = await axios.get(`https://urban-space-fiesta-pjg55v44qp6gfr96v-5000.app.github.dev/api/auth/users/${id}`);
         setFormData({
           full_name: res.data.account_status === "Admin" ? res.data.name || "" : res.data.full_name || "",
           name: res.data.name || "",
@@ -38,7 +38,7 @@ const EditProfile = () => {
           account_status: res.data.account_status || ""
         });
         if (res.data.profilePicUrl) {
-          setPreview(`http://localhost:5000${res.data.profilePicUrl}`);
+          setPreview(`https://urban-space-fiesta-pjg55v44qp6gfr96v-5000.app.github.dev${res.data.profilePicUrl}`);
         }
       } catch (err) {
         console.error("Error fetching user data:", err);
@@ -81,7 +81,7 @@ const EditProfile = () => {
         imageData.append("profilePic", selectedFile);
 
         const imageUploadRes = await axios.post(
-          `http://localhost:5000/api/auth/users/${id}/upload-profile-pic`,
+          `https://urban-space-fiesta-pjg55v44qp6gfr96v-5000.app.github.dev/api/auth/users/${id}/upload-profile-pic`,
           imageData,
           {
             headers: {
@@ -111,7 +111,7 @@ const EditProfile = () => {
 
       // Send update request
       await axios.put(
-        `http://localhost:5000/api/auth/users/${id}`,
+        `https://urban-space-fiesta-pjg55v44qp6gfr96v-5000.app.github.dev/api/auth/users/${id}`,
         updatePayload
       );
 

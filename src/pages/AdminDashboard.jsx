@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import io from "socket.io-client";
 import axios from "axios";
 import { useNavigate } from "react-router-dom"; // Inside your component:
-const socket = io("http://localhost:5000", {
+const socket = io("https://urban-space-fiesta-pjg55v44qp6gfr96v-5000.app.github.dev", {
   transports: ["websocket"],
 });
 import {
@@ -22,7 +22,7 @@ const AdminDashboard = () => {
   useEffect(() => {
     // Fetch past emergencies on component mount
     axios
-      .get("http://localhost:5000/api/auth/emergencies")
+      .get("https://urban-space-fiesta-pjg55v44qp6gfr96v-5000.app.github.dev/api/auth/emergencies")
       .then((res) => setEmergencies(res.data))
       .catch((err) => console.error("Error fetching emergencies:", err));
 
@@ -52,7 +52,7 @@ const AdminDashboard = () => {
               await Promise.all(
                 unseenEmergencies.map((emergency) =>
                   axios.put(
-                    `http://localhost:5000/api/auth/emergencies/${emergency.id}/seen`
+                    `https://urban-space-fiesta-pjg55v44qp6gfr96v-5000.app.github.dev/api/auth/emergencies/${emergency.id}/seen`
                   )
                 )
               );

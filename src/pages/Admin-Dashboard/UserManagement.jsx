@@ -32,7 +32,7 @@ const UserManagement = () => {
         return;
       }
 
-      const response = await fetch('http://localhost:5000/api/auth/users', {
+      const response = await fetch('https://urban-space-fiesta-pjg55v44qp6gfr96v-5000.app.github.dev/api/auth/users', {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json'
@@ -80,7 +80,7 @@ const UserManagement = () => {
 
   const updateUserStatus = async (userId, newStatus) => {
     try {
-      await fetch(`http://localhost:5000/api/auth/users/${userId}`, {
+      await fetch(`https://urban-space-fiesta-pjg55v44qp6gfr96v-5000.app.github.dev/api/auth/users/${userId}`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ account_status: newStatus })
@@ -104,7 +104,7 @@ const UserManagement = () => {
 
   const promoteToFacultyAdmin = async (userId) => {
     try {
-      await fetch(`http://localhost:5000/api/auth/users/${userId}`, {
+      await fetch(`https://urban-space-fiesta-pjg55v44qp6gfr96v-5000.app.github.dev/api/auth/users/${userId}`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ account_status: 'Faculty Admin' })

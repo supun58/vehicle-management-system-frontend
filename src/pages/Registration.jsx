@@ -208,7 +208,7 @@ const Registration = () => {
     setIsSubmitting(true);
 
     try {
-      const response = await axios.post('http://localhost:5000/api/auth/register', formData);
+      const response = await axios.post('https://urban-space-fiesta-pjg55v44qp6gfr96v-5000.app.github.dev/api/auth/register', formData);
       setAlert({ visible: true, title: 'Success', message: response.data.message });
       setFormData({
         full_name: '',
@@ -240,7 +240,7 @@ const Registration = () => {
 useEffect(() => {
   const fetchVehicles = async () => {
     try {
-      const response = await fetch('http://localhost:5000/api/auth/getvehicles'); // Replace with your API endpoint
+      const response = await fetch('https://urban-space-fiesta-pjg55v44qp6gfr96v-5000.app.github.dev/api/auth/getvehicles'); // Replace with your API endpoint
       const data = await response.json();
       setVehicles(data);
     } catch (error) {

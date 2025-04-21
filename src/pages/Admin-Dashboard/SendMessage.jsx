@@ -14,14 +14,14 @@ export default function SendMessage() {
   });
 
   useEffect(() => {
-    fetch("http://localhost:5000/api/auth/templates")
+    fetch("https://urban-space-fiesta-pjg55v44qp6gfr96v-5000.app.github.dev/api/auth/templates")
       .then((res) => res.json())
       .then((data) => setTemplates(data))
       .catch((err) => console.error("Error fetching templates:", err));
   }, []);
 
   useEffect(() => {
-    fetch("http://localhost:5000/api/auth/drivers")
+    fetch("https://urban-space-fiesta-pjg55v44qp6gfr96v-5000.app.github.dev/api/auth/drivers")
       .then((res) => res.json())
       .then((data) => setDrivers(data))
       .catch((err) => console.error("Error fetching drivers:", err));
@@ -41,7 +41,7 @@ export default function SendMessage() {
 
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/auth/messages/send",
+        "https://urban-space-fiesta-pjg55v44qp6gfr96v-5000.app.github.dev/api/auth/messages/send",
         {
           title: template.title,
           body: template.body,
